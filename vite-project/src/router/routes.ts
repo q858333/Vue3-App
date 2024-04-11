@@ -46,6 +46,11 @@ export const constantRoute = [
     //     icon: 'DocumentDelete',
     //   },
     },
+    {
+      path:'/layout',
+      component: ()=> import('@/layout/index.vue'),
+      name:'layout',
+    }
     // anyRoute,
     // {
     //   path: '/screen',

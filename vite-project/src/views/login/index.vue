@@ -42,7 +42,7 @@ function onSubmit (){
     console.log('res',req);
     if(req.code == 200) {
       console.log('token',req.data.token);
-      router.push('/home');
+      router.push('/layout');
     }
 
   })
