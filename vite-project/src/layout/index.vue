@@ -1,14 +1,20 @@
 <template>
     <div>
-        <div class="layout-menu">左侧menu</div>
+        <div class="layout-menu">
+        <logo></logo>
+        </div>
         <div class="layout-nav">顶部导航</div>
-        <div class="layout-content">内容</div>
+        <div class="layout-content">
+
+<p style="background-color: red;height: 10000px;">1231231232131</p>
+
+        </div>
 
     </div>
 </template>
 
 <script setup lang="ts">
-
+import logo from "@/layout/logo/index.vue"
 </script>
 
 <style lang="scss" scoped>
