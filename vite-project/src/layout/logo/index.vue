@@ -14,7 +14,7 @@ import gsetting from "@/gsetting";
 <style scoped lang="scss"> 
 .logo{
     width: 100%;
-    height: 50px;
+    height: $base-menu-logo-height;
     padding: 40px 20px;
     align-items: center;
     display: flex;
@@ -22,6 +22,7 @@ import gsetting from "@/gsetting";
         width: 40px;
         height: 40px;
     }
+    
     p{
         color: white;
         margin: 10px;
