@@ -12,7 +12,7 @@
         </div>
         <div class="layout-nav">顶部导航</div>
         <div class="layout-content">
-            <p style="background-color: red;height: 10000px;">1231231232131</p>
+            <Content></Content>
         </div>
 
     </div>
@@ -21,13 +21,10 @@
 <script setup lang="ts">
 import Logo from "@/layout/logo/index.vue";
 import Menu from "@/layout/menu/index.vue";
-// import { useRouter} from "vue-router";
 import useUserStore from "@/store/modules/user";
-// import menu from "@/layout/menu/index.vue";
+import Content from "@/layout/content/index.vue";
 
 let useUser = useUserStore();
-// let router = useRouter();
-// let routes: RouteRecordRaw[] = router.getRoutes();
 
 console.log("list,",useUser.menuRoutes);
 </script>
