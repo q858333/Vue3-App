@@ -1,14 +1,14 @@
 <template>
-        <router-view v-slot="{Component}">
+    <router-view v-slot="{ Component }">
 
-            <transition name="fade">
-            <component :is="Component"/>
-            </transition>
+        <transition name="fade">
+            <component :is="Component" />
+        </transition>
 
-        </router-view>
+    </router-view>
 </template>
 
-<script setup name="Content">
+<script setup>
 
 </script>
 
@@ -17,14 +17,13 @@
     opacity: 0;
     scale: 0;
 }
+
 .fade-enter-to {
     opacity: 1;
     scale: 1;
 }
+
 .fade-enter-active {
     transition: all 0.5s;
 }
-
-
-
 </style>

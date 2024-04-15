@@ -6,9 +6,10 @@
                     <el-icon>
                         <component :is="item.meta.icon"></component>
                     </el-icon>
-                    <span>
-                        {{ item.meta.title }}
-                    </span>
+                    <template #title>
+                        <span>{{ item.meta.title }}</span>
+                    </template>
+                    
         </el-menu-item>
         </template>
         <!-- //判断是否有子菜单，但是子菜单只有一个 -->
@@ -17,9 +18,12 @@
                 <el-icon>
                     <component :is="item.children[0].meta.icon"></component>
                 </el-icon>
+                <template #title>
                     <span>
                         {{ item.children[0].meta.title }}
                     </span>
+                </template>
+                    
                 </el-menu-item>
         </template>
         <!-- //判断是否有子菜单，子菜单有多个 -->
