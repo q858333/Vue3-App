@@ -8,7 +8,7 @@
     </router-view>
 </template>
 
-<script setup>
+<script setup lang="ts" name="Content">
 
 </script>
 

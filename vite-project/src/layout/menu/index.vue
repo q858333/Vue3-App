@@ -9,7 +9,6 @@
                     <template #title>
                         <span>{{ item.meta.title }}</span>
                     </template>
-                    
         </el-menu-item>
         </template>
         <!-- //判断是否有子菜单，但是子菜单只有一个 -->
@@ -62,7 +61,7 @@ function goRoute(item: any) {
 
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="scss" >
 
 
 </style>

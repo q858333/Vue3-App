@@ -5,7 +5,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Logo">
 
 import gsetting from "@/gsetting";
 
@@ -15,7 +15,7 @@ import gsetting from "@/gsetting";
 .logo{
     width: 100%;
     height: $base-menu-logo-height;
-    padding: 40px 20px;
+    padding: 40px 10px;
     align-items: center;
     display: flex;
     img{

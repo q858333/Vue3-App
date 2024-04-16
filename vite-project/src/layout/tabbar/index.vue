@@ -1,8 +1,8 @@
 <template>
     <div class="tabbar">
         <div class="tabbar_left">
-            <el-icon style="margin: 0 10px;">
-                <Expand />
+            <el-icon style="margin: 0 10px;" @click="changeFoldStatus">
+                <component :is="useSetting.isfold?'Fold':'Expand'"></component>
             </el-icon>
             <el-breadcrumb separator-icon="ArrowRight">
                 <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
@@ -14,12 +14,10 @@
             <el-button icon="FullScreen" circle />
             <el-button icon="Setting" circle />
             <img src="../../../public/logo.png" style="width: 30px; height:30px;margin: 0 10px;" alt="">
-
-
             <el-dropdown @command="handleCommand">
                 <span >
                     Dropdown List
-                    <el-icon >
+                    <el-icon>
                         <arrow-down />
                     </el-icon>
                 </span>
@@ -35,7 +33,15 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Tabbar">
+
+import useAppSetting from "@/store/modules/appSetting";
+
+let useSetting = useAppSetting();
+function changeFoldStatus () {
+    useSetting.isfold = !useSetting.isfold;
+
+}
 
 function handleCommand(command:string){
     console.log('handleCommand',command);
