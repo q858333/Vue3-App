@@ -5,8 +5,12 @@
                 <component :is="useSetting.isfold?'Fold':'Expand'"></component>
             </el-icon>
             <el-breadcrumb separator-icon="ArrowRight">
-                <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-                <el-breadcrumb-item>management</el-breadcrumb-item>
+                <el-breadcrumb-item  v-for="(item,index) in $useRoute.matched" :key="index" v-show="item.meta.title" :to="{ path:item.path }">
+                    <el-icon>
+                        <component :is="item.meta.icon"></component>
+                    </el-icon>
+                    {{item.meta.title}}
+                </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="tabbar_right">
@@ -36,8 +40,12 @@
 <script setup lang="ts" name="Tabbar">
 
 import useAppSetting from "@/store/modules/appSetting";
-
+import {useRoute} from "vue-router";
 let useSetting = useAppSetting();
+
+let $useRoute = useRoute();
+
+console.log('$useRoute',$useRoute);
 function changeFoldStatus () {
     useSetting.isfold = !useSetting.isfold;
 

@@ -18,6 +18,7 @@ import gsetting from "@/gsetting";
     padding: 40px 10px;
     align-items: center;
     display: flex;
+
     img{
         width: 40px;
         height: 40px;
@@ -26,6 +27,7 @@ import gsetting from "@/gsetting";
     p{
         color: white;
         margin: 10px;
+        white-space: nowrap;
     }
 }
 </style>

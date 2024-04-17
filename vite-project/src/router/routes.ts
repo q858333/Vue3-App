@@ -143,8 +143,6 @@ export const constantRoute = [
       redirect: '/home',
       meta:{
         hidden:false,  
-        title:'layout',
-        icon: 'Promotion', //菜单文字左侧的图标,支持element-plus全部图标
       },
       children:[
         {
@@ -180,6 +178,7 @@ export const constantRoute = [
         title: '权限管理',
         icon: 'Lock',
       },
+      redirect: '/acl/user',
       children: [
         {
           path: '/acl/user',
