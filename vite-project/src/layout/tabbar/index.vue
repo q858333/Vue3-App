@@ -14,13 +14,13 @@
             </el-breadcrumb>
         </div>
         <div class="tabbar_right">
-            <el-button icon="Refresh" circle />
-            <el-button icon="FullScreen" circle />
+            <el-button icon="Refresh" circle @click="refreshClick"/>
+            <el-button icon="FullScreen" circle @click="fullScreenClick"/>
             <el-button icon="Setting" circle />
-            <img src="../../../public/logo.png" style="width: 30px; height:30px;margin: 0 10px;" alt="">
+            <img :src="useUser.avatar" style="width: 30px; height:30px;margin: 0 10px;border-radius: 50%;" alt="">
             <el-dropdown @command="handleCommand">
                 <span >
-                    Dropdown List
+                   {{useUser.username}}
                     <el-icon>
                         <arrow-down />
                     </el-icon>
@@ -40,8 +40,10 @@
 <script setup lang="ts" name="Tabbar">
 
 import useAppSetting from "@/store/modules/appSetting";
+import useUserStore from "@/store/modules/user";
 import {useRoute} from "vue-router";
 let useSetting = useAppSetting();
+let useUser = useUserStore();
 
 let $useRoute = useRoute();
 
@@ -53,6 +55,19 @@ function changeFoldStatus () {
 
 function handleCommand(command:string){
     console.log('handleCommand',command);
+}
+
+function fullScreenClick () {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
+}
+
+function refreshClick () {
+
+
 }
 
 </script>

@@ -34,18 +34,19 @@ import { loginFormData } from '@/api/user/type';
 import {reactive} from 'vue';
 import { useRouter } from 'vue-router';
 import { reqLogin } from '@/api/user'; 
+import  useUserStore  from '@/store/modules/user';
+
 let loginData:loginFormData = <loginFormData>reactive({username:'admin',password:'111111'});
 let router = useRouter();
+let useUser = useUserStore();
 
-function onSubmit (){
-  reqLogin(loginData).then((req)=>{
-    console.log('res',req);
-    if(req.code == 200) {
-      console.log('token',req.data.token);
-      router.push('/layout');
-    }
-
-  })
+async function onSubmit ()  {
+  let result = await useUser.userLogin(loginData);
+  console.log("登录完成");
+  if(result == "ok") {
+    console.log("登录成功");
+    router.push('/');
+  }
 }
 
 </script>
