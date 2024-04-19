@@ -1,6 +1,6 @@
 <template>
     <div>
-     <h1>我是首页11</h1>
+     <h1>你好 {{useUser.username}}</h1>
     </div>
 </template>
 

@@ -19,11 +19,8 @@
             <el-button icon="Setting" circle />
             <img :src="useUser.avatar" style="width: 30px; height:30px;margin: 0 10px;border-radius: 50%;" alt="">
             <el-dropdown @command="handleCommand">
-                <span >
-                   {{useUser.username}}
-                    <el-icon>
-                        <arrow-down />
-                    </el-icon>
+                <span>
+                    {{useUser.username??""}}<el-icon> <arrow-down /></el-icon>
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
@@ -41,11 +38,12 @@
 
 import useAppSetting from "@/store/modules/appSetting";
 import useUserStore from "@/store/modules/user";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 let useSetting = useAppSetting();
 let useUser = useUserStore();
 
 let $useRoute = useRoute();
+let $useRouter = useRouter();
 
 console.log('$useRoute',$useRoute);
 function changeFoldStatus () {
@@ -55,6 +53,12 @@ function changeFoldStatus () {
 
 function handleCommand(command:string){
     console.log('handleCommand',command);
+    if(command == "1") {
+                //退出登录
+        console.log("logout");
+        useUser.userLogout();
+        $useRouter.push({path:'/login',query:{redirect:$useRoute.path}});
+    }
 }
 
 function fullScreenClick () {
