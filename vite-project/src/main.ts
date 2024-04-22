@@ -7,6 +7,8 @@ import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import 'virtual:svg-icons-register'
 import router from './router'
+
+import "./router/permission";
 import { createPinia } from 'pinia'
 
 

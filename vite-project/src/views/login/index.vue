@@ -33,7 +33,6 @@ import { User, Lock } from '@element-plus/icons-vue';
 import { loginFormData } from '@/api/user/type';
 import {reactive} from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { reqLogin } from '@/api/user'; 
 import  useUserStore  from '@/store/modules/user';
 
 let loginData:loginFormData = <loginFormData>reactive({username:'admin',password:'111111'});
@@ -51,8 +50,8 @@ async function onSubmit ()  {
   console.log("登录完成");
   if(result == "ok") {
     console.log("登录成功");
-
-    $router .push({path:$useRoute.query.redirect ?? '/'});
+    let pagePath = $useRoute.query.redirect ?? '/';
+    $router .push({path:pagePath});
   }
 }
 
