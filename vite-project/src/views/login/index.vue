@@ -34,7 +34,7 @@ import { loginFormData } from '@/api/user/type';
 import {reactive} from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import  useUserStore  from '@/store/modules/user';
-
+import pinia from '@/store';
 let loginData:loginFormData = <loginFormData>reactive({username:'admin',password:'111111'});
 
 
@@ -43,15 +43,16 @@ let $useRoute = useRoute();
 let $router = useRouter();
 
 
-let useUser = useUserStore();
+let useUser = useUserStore(pinia);
 
 async function onSubmit ()  {
   let result = await useUser.userLogin(loginData);
   console.log("登录完成");
   if(result == "ok") {
-    console.log("登录成功");
+    console.log("登录成功 token:",useUser.token);
+    // useUser.userInfo();
     let pagePath = $useRoute.query.redirect ?? '/';
-    $router .push({path:pagePath});
+    $router.push({path:pagePath});
   }
 }
 

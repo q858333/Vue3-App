@@ -7,9 +7,9 @@ import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import 'virtual:svg-icons-register'
 import router from './router'
+import { createPinia } from 'pinia'
 
 import "./router/permission";
-import { createPinia } from 'pinia'
 
 
 const app = createApp(App);
@@ -36,3 +36,4 @@ app.use(pinia);
 app.use(router);
 
 app.mount('#app');
+

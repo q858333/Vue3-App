@@ -10,11 +10,7 @@ import { onMounted } from 'vue';
 let useUser = useUserStore();
 
 onMounted(async () => {
-    let result = await useUser.userInfo();
-    if(result == "ok") {
-
-        console.log("获取用户信息成功", useUser.username);
-    }
+    
 });
 
 </script>

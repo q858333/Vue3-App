@@ -8,15 +8,14 @@ import type {
   userInfoReponseData,
 } from '@/api/user/type'
 import type { UserState } from './types/type'
-//引入操作本地存储的工具方法
-// import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 // 引入路由(常量路由)
 import { constantRoute, anyRoute } from '@/router/routes'
 
 //引入深拷贝方法
 //@ts-expect-error
 import cloneDeep from 'lodash/cloneDeep'
-import router from '@/router'
+//引入操作本地存储的工具方法
+import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN  } from '@/utils/token'
 //用于过滤当前用户需要展示的异步路由
 function filterAsyncRoute(asnycRoute: any, routes: any) {
   return asnycRoute.filter((item: any) => {
@@ -35,7 +34,7 @@ const useUserStore = defineStore('User', {
   //小仓库存储数据地方
   state: (): UserState => {
     return {
-      token: '', //用户唯一标识token
+      token: GET_TOKEN(), //用户唯一标识token
       menuRoutes: constantRoute, //仓库存储生成菜单需要数组(路由)
       username: '',
       avatar: '',
@@ -55,6 +54,7 @@ const useUserStore = defineStore('User', {
         //pinia仓库存储一下token
         //由于pinia|vuex存储数据其实利用js对象
         this.token = result.data.token as string;
+        SET_TOKEN(this.token);
         //本地存储持久化存储一份
         // SET_TOKEN(result.data as string)
         //能保证当前async函数返回一个成功的promise
@@ -98,7 +98,7 @@ const useUserStore = defineStore('User', {
         this.token = '';
         this.username = '';
         this.avatar = '';
-        // REMOVE_TOKEN()
+        REMOVE_TOKEN();
         // return 'ok'
       // } else {
       //   return Promise.reject(new Error(result.message))
