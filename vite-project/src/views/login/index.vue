@@ -35,6 +35,8 @@ import {reactive} from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import  useUserStore  from '@/store/modules/user';
 import pinia from '@/store';
+import { ElNotification } from 'element-plus';
+
 let loginData:loginFormData = <loginFormData>reactive({username:'admin',password:'111111'});
 
 
@@ -46,14 +48,23 @@ let $router = useRouter();
 let useUser = useUserStore(pinia);
 
 async function onSubmit ()  {
-  let result = await useUser.userLogin(loginData);
-  console.log("登录完成");
-  if(result == "ok") {
+  try {
+    await useUser.userLogin(loginData);
     console.log("登录成功 token:",useUser.token);
-    // useUser.userInfo();
     let pagePath = $useRoute.query.redirect ?? '/';
-    $router.push({path:pagePath});
+    $router.push({ path: pagePath } );
+    ElNotification({
+      type: 'success',
+      message: '欢迎回来',
+      title: `HI,${Date()}`
+    });
+  } catch (error) {
+    ElNotification({
+      type: 'error',
+      message: (error as Error).message,
+    });
   }
+
 }
 
 </script>

@@ -39,8 +39,9 @@
 import useAppSetting from "@/store/modules/appSetting";
 import useUserStore from "@/store/modules/user";
 import {useRoute, useRouter} from "vue-router";
+import pinia from "@/store";
 let useSetting = useAppSetting();
-let useUser = useUserStore();
+let useUser = useUserStore(pinia);
 
 let $useRoute = useRoute();
 let $useRouter = useRouter();
