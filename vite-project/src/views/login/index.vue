@@ -35,6 +35,8 @@ import {reactive} from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import  useUserStore  from '@/store/modules/user';
 import pinia from '@/store';
+import axios from 'axios'
+
 import { ElNotification } from 'element-plus';
 
 let loginData:loginFormData = <loginFormData>reactive({username:'admin',password:'111111'});
@@ -48,6 +50,18 @@ let $router = useRouter();
 let useUser = useUserStore(pinia);
 
 async function onSubmit ()  {
+
+  // axios.post('http://featuremix-qa.aisweetheart.club')
+  // .then(response => {
+  //   // 请求成功，处理响应数据
+  //   console.log(response.data);
+  // })
+  // .catch(error => {
+  //   // 请求失败，处理错误
+  //   console.error(error);
+  // });
+
+
   try {
     await useUser.userLogin(loginData);
     console.log("登录成功 token:",useUser.token);

@@ -53,7 +53,7 @@ const useUserStore = defineStore('User', {
       if (result.code == 200) {
         //pinia仓库存储一下token
         //由于pinia|vuex存储数据其实利用js对象
-        this.token = result.data.token as string;
+        this.token = result.data;
         SET_TOKEN(this.token);
         //本地存储持久化存储一份
         // SET_TOKEN(result.data as string)
@@ -69,10 +69,10 @@ const useUserStore = defineStore('User', {
       let result: userInfoReponseData = await reqUserInfo();
       //如果获取用户信息成功，存储一下用户信息
       if (result.code == 200) {
-        this.username = result.data.checkUser.username;
-        this.avatar = result.data.checkUser.avatar;
-        console.log("获取用户信息",result.data.checkUser);
-        // this.buttons = result.data.buttons
+        this.username = result.data.name;
+        this.avatar = result.data.avatar;
+        console.log("获取用户信息",result.data);
+        this.buttons = result.data.buttons;
         //计算当前用户需要展示的异步路由
         // const userAsyncRoute = filterAsyncRoute(
         //   cloneDeep(asnycRoute),

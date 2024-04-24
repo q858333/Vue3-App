@@ -20,14 +20,16 @@ export interface ResponseData {
   
   //定义登录接口返回数据类型
   export interface loginResponseData extends ResponseData {
-    data: {
-      token:string
-    }
+    data: string
   }
   
   //定义获取用户信息返回数据类型
   export interface userInfoReponseData extends ResponseData {
     data: {
-      checkUser:UserInfo
+      routes:string[]
+      buttons:string[]
+      roles:string[]
+      name:string
+      avatar:string
     }
   }
