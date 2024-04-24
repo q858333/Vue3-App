@@ -7,18 +7,19 @@ import { viteMockServe } from 'vite-plugin-mock'
 import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 // https://vitejs.dev/config/
-export default (command: string, mode: string) => {
+export default (command: any) => {
     // 根据当前工作目录中的 `mode` 加载 .env 文件
-  const env = loadEnv(mode, process.cwd())
-  console.log('1111-env', env,env.VITE_BASE_URL);
-  const baseApi = import.meta;
-  console.log('base-api', baseApi);
+  const env = loadEnv(command.mode, process.cwd())
+  console.log('command',command,'1111-env', env);
+  // const baseApi = import.meta;
+  // console.log('base-api', baseApi);
+  const key = env.VITE_APP_BASE_API;
 
   return {
      // vite 配置
-     define: {
-      __APP_ENV__: JSON.stringify(env.NODE_ENV),
-    },
+    //  define: {
+    //   __APP_ENV__: JSON.stringify(env.NODE_ENV),
+    // },
 
     plugins: [VueSetupExtend(), vue(),
     createSvgIconsPlugin({
@@ -53,9 +54,9 @@ export default (command: string, mode: string) => {
       // port: 5173,
       host: true,
       proxy: {
-        '/api': {
+        [env.VITE_APP_BASE_API]: {
           //获取数据的服务器地址设置
-          target: 'http://sph-api.atguigu.cn',
+          target: env.VITE_SERVE,
           //需要代理跨域
           changeOrigin: true,
           secure: false,

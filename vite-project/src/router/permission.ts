@@ -8,7 +8,7 @@ import pinia from "@/store";
 
 nprogress.configure({ showSpinner: false });
 
-    let useUser = useUserStore(pinia);
+let useUser = useUserStore(pinia);
 
 router.beforeEach(async (to, from, next) => {
 
