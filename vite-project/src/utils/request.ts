@@ -1,3 +1,4 @@
+import { path } from 'path';
 //进行axios二次封装:使用请求与响应拦截器
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
@@ -24,6 +25,7 @@ request.interceptors.request.use((config) => {
 //第三步:响应拦截器
 request.interceptors.response.use(
   (response) => {
+    console.log('响应拦截器',response.request.responseURL ,'返回内容 ',response.data);
     //成功回调
     //简化数据
     return response.data

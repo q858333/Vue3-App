@@ -1,4 +1,4 @@
-
+import type {ResponseData } from '@/api/base/type'
 export interface loginFormData {
     username:String,
     password:String,
@@ -6,11 +6,7 @@ export interface loginFormData {
 
 
 //定义全部接口返回数据都拥有ts类型
-export interface ResponseData {
-    code: number
-    message: string
-    ok: boolean
-  }
+
 
   export interface UserInfo {
     username: string
