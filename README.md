@@ -1,2 +1,2 @@
 # Vue3-App
-vue3+ts+scss
+vite vue3+ts+scss
