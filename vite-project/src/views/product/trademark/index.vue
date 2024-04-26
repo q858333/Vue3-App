@@ -13,8 +13,15 @@
                 </el-table-column>
                 <el-table-column label="品牌操作">
                     <template #="{ row, $index }">
-                        <el-button type="primary" size="small" @click="editClick($index,row)">编辑</el-button>
-                        <el-button type="danger" size="small" @click="deleteClick(row)">删除</el-button>
+
+                        <el-button type="primary" size="small" @click="editClick($index, row)">编辑</el-button>
+
+                        <el-popconfirm :title="'Are you sure to delete ' + row.tmName + '?'" icon="Delete" icon-color="red" width="250" @confirm=deleteClick(row)>
+                            <template #reference>
+                                <el-button type="danger" size="small">删除</el-button>
+                            </template>
+                        </el-popconfirm>
+
                     </template>
                 </el-table-column>
             </el-table>
@@ -24,8 +31,9 @@
                 @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </el-card>
 
-        <el-dialog v-model="dialogFormVisible" :title="tradeMarkForm.id ? '修改品牌' : '添加品牌'" width="500" @close="closeDialog">
-            <el-form ref="formRef" :model="tradeMarkForm"  :rules="formRules">
+        <el-dialog v-model="dialogFormVisible" :title="tradeMarkForm.id ? '修改品牌' : '添加品牌'" width="500"
+            @close="closeDialog">
+            <el-form ref="formRef" :model="tradeMarkForm" :rules="formRules">
                 <el-form-item label="品牌名称" label-width="100" prop="tmName">
                     <el-input placeholder="请输入品牌名称" v-model="tradeMarkForm.tmName" />
                 </el-form-item>
@@ -54,7 +62,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { reqTrademarkList, reqAddOrUpdateTrademark, reqDeleteTrademark} from '@/api/product/trademark';
+import { reqTrademarkList, reqAddOrUpdateTrademark, reqDeleteTrademark } from '@/api/product/trademark';
 import type { TradeMarkListResponseData, TradeMark } from '@/api/product/trademark/type';
 import { ElMessage } from 'element-plus'
 const imgUploadUrl = ref<string>(import.meta.env.VITE_APP_BASE_API + "/admin/product/fileUpload");
@@ -78,19 +86,21 @@ let formRef = ref();
 
 // trigger: 'blur' 失去焦点，‘change’发生变化
 let formRules = {
-    tmName:[
-        {required: true, message: '请输入品牌名称', trigger: 'blur'},
+    tmName: [
+        { required: true, message: '请输入品牌名称', trigger: 'blur' },
         { min: 2, max: 10, message: '名称至少2个字符，最多10个字符', trigger: 'blur' },
     ],
-    logoUrl:[
-        {required: true,validator: (rule:any, value:any, callback:any) => {
-            if (!value) {
-                callback(new Error('请上传品牌LOGO'));
-            } else {
-                callback();
+    logoUrl: [
+        {
+            required: true, validator: (rule: any, value: any, callback: any) => {
+                if (!value) {
+                    callback(new Error('请上传品牌LOGO'));
+                } else {
+                    callback();
+                }
             }
-        }},
-    ]   
+        },
+    ]
 };
 
 
@@ -101,7 +111,7 @@ onMounted(() => {
 
 //获取数据
 async function fetchTradeMarkList() {
-    
+
     let response: TradeMarkListResponseData = await reqTrademarkList(currentPage.value, pageSize.value);
     if (response.code == 200) {
         trademarkList.value = response.data.records;
@@ -134,16 +144,19 @@ function beforeAvatarUpload(rawFile: File) {
 
 }
 
-function editClick(index:number,row:TradeMark) {
+function editClick(index: number, row: TradeMark) {
     tradeMarkForm.value = row;
     dialogFormVisible.value = true;
 
 }
 
-async function deleteClick(row:TradeMark) {
-    let result = await reqDeleteTrademark(row.id??0);
-    if(result.code == 200) {
-        currentPage.value = 1;
+async function deleteClick(row: TradeMark) {
+   
+    let result = await reqDeleteTrademark(row.id ?? 0);
+    if (result.code == 200) {
+        if(trademarkList.value.length == 1 && currentPage.value > 1){
+            currentPage.value = currentPage.value - 1;
+        }
         fetchTradeMarkList();
         ElMessage.success("删除成功");
     } else {
@@ -154,15 +167,15 @@ async function deleteClick(row:TradeMark) {
 
 async function confirmClick() {
 
-    try{
+    try {
         await formRef.value.validate();
-    }catch(e) {
+    } catch (e) {
         ElMessage.error("请完成信息填写");
         return;
     }
 
     let result = await reqAddOrUpdateTrademark(tradeMarkForm.value);
-    if(result.code == 200) {
+    if (result.code == 200) {
         fetchTradeMarkList();
         ElMessage.success("操作成功");
     } else {
@@ -171,7 +184,7 @@ async function confirmClick() {
 
 
     dialogFormVisible.value = false;
-    
+
 }
 
 function addTradeMarkClick() {
@@ -191,7 +204,7 @@ function handleCurrentChange(value: number) {
     fetchTradeMarkList();
 }
 
-function closeDialog () {
+function closeDialog() {
     formRef.value.clearValidate();
     tradeMarkForm.value = {
         tmName: '',
