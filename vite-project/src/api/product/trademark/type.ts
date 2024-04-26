@@ -3,7 +3,7 @@ import type { ResponseData } from '@/api/base/type'
 
 export interface TradeMark {
     id?: number
-    name: string
+    tmName: string
     logoUrl: string
 }
 
