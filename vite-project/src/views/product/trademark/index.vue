@@ -63,7 +63,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { reqTrademarkList, reqAddOrUpdateTrademark, reqDeleteTrademark } from '@/api/product/trademark';
-import type { TradeMarkListResponseData, TradeMark } from '@/api/product/trademark/type';
+import type { TradeMark } from '@/api/product/trademark/type';
 import { ElMessage } from 'element-plus'
 const imgUploadUrl = ref<string>(import.meta.env.VITE_APP_BASE_API + "/admin/product/fileUpload");
 
@@ -112,7 +112,7 @@ onMounted(() => {
 //获取数据
 async function fetchTradeMarkList() {
 
-    let response: TradeMarkListResponseData = await reqTrademarkList(currentPage.value, pageSize.value);
+    let response = await reqTrademarkList(currentPage.value, pageSize.value);
     if (response.code == 200) {
         trademarkList.value = response.data.records;
         total.value = response.data.total;
