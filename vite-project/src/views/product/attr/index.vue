@@ -3,25 +3,19 @@
         <el-card>
            <el-form :inline="true" >
                 <el-form-item label="一级分类" class="form-item-class">
-                     <el-select v-model="oneLevel">
-                        <el-option label="鞋子" value="1"></el-option>
-                        <el-option label="衣服" value="2"></el-option>
-                        <el-option label="帽子" value="3"></el-option>
+                     <el-select v-model="useCategory.c1ID" @change="useCategory.c1Change()">
+                        <el-option v-for="item in useCategory.c1List" :label=item.name :value=item.id></el-option>
                      </el-select>
                 </el-form-item>
 
                 <el-form-item label="二级分类" class="form-item-class">
-                     <el-select>
-                        <el-option label="鞋子" value="1"></el-option>
-                        <el-option label="衣服" value="2"></el-option>
-                        <el-option label="帽子" value="3"></el-option>
+                     <el-select v-model="useCategory.c2ID" @change="useCategory.c2Change()">
+                        <el-option v-for="item in useCategory.c2List" :label=item.name :value=item.id></el-option>
                      </el-select>
                 </el-form-item>
                 <el-form-item label="三级分类" class="form-item-class">
-                     <el-select>
-                        <el-option label="鞋子" value="1"></el-option>
-                        <el-option label="衣服" value="2"></el-option>
-                        <el-option label="帽子" value="3"></el-option>
+                    <el-select v-model="useCategory.c3ID" >
+                        <el-option v-for="item in useCategory.c3List" :label=item.name :value=item.id></el-option>
                      </el-select>
                 </el-form-item>
 
@@ -39,7 +33,6 @@
                 <el-table-column label="属性值名称" ></el-table-column>
                 <el-table-column label="操作" width="200"></el-table-column>
 
-
             </el-table>
 
         </el-card>
@@ -48,13 +41,21 @@
 
 <script setup lang="ts">
 
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
+import useCategoryStore from '@/store/modules/category';
 
-let oneLevel = ref<string>('');
+let useCategory = useCategoryStore();
 
 onMounted(() => {
-    
+    initData();
 })
+
+function initData () {
+    console.log('attr fetchC1List');
+    useCategory.fetchC1List();
+
+}
+
 
 function addAttrClick (){
 

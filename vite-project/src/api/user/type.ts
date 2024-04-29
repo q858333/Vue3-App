@@ -1,4 +1,4 @@
-import type {ResponseData } from '@/api/base/type'
+import type { ResponseData } from '@/api/base/type'
 export interface loginFormData {
     username:String,
     password:String,
