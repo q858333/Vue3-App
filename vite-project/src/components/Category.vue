@@ -12,8 +12,8 @@
                         <el-option v-for="item in useCategory.c2List" :label=item.name :value=item.id></el-option>
                      </el-select>
                 </el-form-item>
-                <el-form-item label="三级分类" class="form-item-class">
-                    <el-select v-model="useCategory.c3ID" >
+                <el-form-item label="三级分类" class="form-item-class" >
+                    <el-select v-model="useCategory.c3ID" @change="c3Change()">
                         <el-option v-for="item in useCategory.c3List" :label=item.name :value=item.id></el-option>
                      </el-select>
                 </el-form-item>
@@ -28,12 +28,20 @@ import useCategoryStore from '@/store/modules/category';
 
 let useCategory = useCategoryStore();
 
+let myEmits = defineEmits(['c3Change']);
+
 onMounted(() => {
     initData();
 })
 
 function initData () {
     useCategory.fetchC1List();
+}
+
+function c3Change() {
+    console.log('Category fetchAttrList');
+
+    myEmits("c3Change");
 }
 
 </script>
