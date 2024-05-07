@@ -1,29 +1,46 @@
 <template>
     <div>
-        <el-card>
-            <Category @c3Change="c3Change()"></Category>
-        </el-card>
+        <Category @c3Change="c3Change()" :enable="isShowList"></Category>
+        
 
         <el-card style="margin:10px 0px">
-            <el-button type="primary" icon="Plus" @click="addAttrClick">添加属性</el-button>
-
-            <el-table border style="margin: 10px 0px;" :data="attrList">
+            <div v-show="isShowList">
+                <el-button type="primary" icon="Plus" @click="addClick" :disabled="!useCategory.c3ID">添加属性</el-button>
+                <el-table border style="margin: 10px 0px;" :data="attrList">
                 <el-table-column label="序号" type="index" width="100" align="center"></el-table-column>
                 <el-table-column label="属性名称" width="200" prop="attrName"></el-table-column>
                 <el-table-column label="属性值名称">
                     <template #default="{ row }">
-                        <el-tag style="margin: 5px;" v-for="item in row.attrValueList" :key="item.id" type="info">{{ item.valueName }}</el-tag>
+                        <el-tag style="margin: 5px;" v-for="item in row.attrValueList" :key="item.id" type="primary">{{ item.valueName }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="200">
                     <template #default="{ row }">
-                        <el-button type="primary" size="small">编辑</el-button>
-                        <el-button type="danger" size="small">删除</el-button>
-
+                        <el-button type="primary" size="small" @click="editClick(row)">编辑</el-button>
+                        <el-button type="danger" size="small" @click="deleteClick(row)">删除</el-button>
                     </template>
                 </el-table-column>
 
-            </el-table>
+                </el-table>
+            </div>
+            <div v-show="!isShowList">
+                <el-form>
+                    <el-form-item label="属性名称">
+                        <el-input placeholder="输入名称"></el-input>
+                    </el-form-item>
+                </el-form>
+                <el-button type="primary" size="default" icon="Plus" @click="addAttrClick">添加属性值</el-button>
+                <el-button type="primary" size="default" @click="cancelClick">取消</el-button>
+                <el-table border style="margin: 10px 0px;">
+                    <el-table-column label="序号" type="index" width="100" align="center"></el-table-column>
+                    <el-table-column label="属性值名称"></el-table-column>
+                    <el-table-column label="属性值操作"></el-table-column>
+                </el-table>
+                <el-button type="primary" size="default" @click="saveClick">保存</el-button>
+                <el-button type="primary" size="default" @click="cancelClick">取消</el-button>
+
+            </div>
+           
 
         </el-card>
     </div>
@@ -40,6 +57,7 @@ import { ElMessage } from 'element-plus';
 import {ref} from 'vue';
 let attrList = ref<AttrModel[]>([]);
 
+let isShowList = ref(true);
 let useCategory = useCategoryStore();
 
 function c3Change() {
@@ -58,10 +76,35 @@ async function fetchAttrList() {
         }
     }
 }
+function addClick () {
+    isShowList.value = false;
+}
+
+
+function editClick (row:AttrModel) {
+    console.log(row);
+    isShowList.value = false;
+
+}
+
+function deleteClick (row:AttrModel) {
+    console.log(row);
+
+}
+
+
+function cancelClick () {
+    isShowList.value = true;
+
+}
+function saveClick () {
+
+}
 
 function addAttrClick() {
 
 }
+
 
 </script>
 
