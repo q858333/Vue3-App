@@ -24,15 +24,17 @@ export interface CategoryResponseData extends ResponseData {
 
 
 export interface AttrTagModel {
-    id:number
+    id?:number
     valueName:string
-    attrId:number
+    attrId?:number
+    isEditing?:boolean
 }
 
 export interface AttrModel {
-    id:number
+    id?:number
     attrName:string
-    categoryId:number
+    categoryId:number|string
+    categoryLevel:number
     attrValueList:AttrTagModel[]
 }
 
