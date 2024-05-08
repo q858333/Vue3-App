@@ -65,15 +65,6 @@ const useCategoryStore = defineStore('Category', {
       this.fetchC3List();
     },
 
-    clearData() {
-      this.c1ID = '';
-      this.c1List=[];
-      this.c2ID='';
-      this.c2List=[];
-      this.c3ID='';
-      this.c3List=[];
-    },
-
   },
 
   
