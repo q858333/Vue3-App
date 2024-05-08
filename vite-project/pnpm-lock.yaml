@@ -8,9 +8,15 @@ dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.3.1
     version: 2.3.1(vue@3.4.21)
+  '@types/lodash':
+    specifier: ^4.17.1
+    version: 4.17.1
   element-plus:
     specifier: ^2.6.3
     version: 2.6.3(vue@3.4.21)
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
@@ -553,11 +559,11 @@ packages:
   /@types/lodash-es@4.17.12:
     resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
     dependencies:
-      '@types/lodash': 4.17.0
+      '@types/lodash': 4.17.1
     dev: false
 
-  /@types/lodash@4.17.0:
-    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
+  /@types/lodash@4.17.1:
+    resolution: {integrity: sha512-X+2qazGS3jxLAIz5JDXDzglAF3KpijdhFxlf/V1+hEsOUc+HnWi81L/uv/EvGuV90WY+7mPGFCUDGfQC3Gj95Q==}
     dev: false
 
   /@types/node@20.12.7:
@@ -1317,7 +1323,7 @@ packages:
       '@element-plus/icons-vue': 2.3.1(vue@3.4.21)
       '@floating-ui/dom': 1.6.3
       '@popperjs/core': /@sxzz/popperjs-es@2.11.7
-      '@types/lodash': 4.17.0
+      '@types/lodash': 4.17.1
       '@types/lodash-es': 4.17.12
       '@vueuse/core': 9.13.0(vue@3.4.21)
       async-validator: 4.2.5

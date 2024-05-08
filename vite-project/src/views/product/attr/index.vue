@@ -70,10 +70,12 @@
 // import { onMounted } from 'vue';
 import Category from '@/components/Category.vue';
 import useCategoryStore from '@/store/modules/category';
-import { reqAddOrUpdateAttr, reqAttrList } from '@/api/product/attr'
+import { reqAddOrUpdateAttr, reqAttrList, reqDeleteAttr} from '@/api/product/attr'
 import type { AttrListResponseData, AttrModel, AttrTagModel } from '@/api/product/attr/type'
 import { ElMessage } from 'element-plus';
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, onBeforeUnmount} from 'vue';
+import { cloneDeep } from 'lodash';
+
 let attrList = ref<AttrModel[]>([]);
 
 let isShowList = ref(true);
@@ -88,8 +90,12 @@ let currentAttrModel = ref<AttrModel>({
     attrValueList: [],
 })
 
+onBeforeUnmount(()=>{
+    console.log("onBeforeUnmount");
+    useCategory.clearData();
+});
+
 function c3Change() {
-    console.log('fetchAttrList');
     fetchAttrList();
 }
 
@@ -116,13 +122,22 @@ function addClick() {
 
 
 function editClick(row: AttrModel) {
-    currentAttrModel.value = row;
+    //深拷贝
+    currentAttrModel.value = cloneDeep(row);
     isShowList.value = false;
 
 }
 
-function deleteClick(row: AttrModel) {
-    currentAttrModel.value = row;
+async function deleteClick(row: AttrModel) {
+    console.log("deleteClick",row.id);
+    let result = await reqDeleteAttr(row.id??0);
+    if (result.code == 200) {
+        ElMessage.success('删除成功');
+        fetchAttrList();
+    } else {
+        ElMessage.error('删除失败');
+    }
+
 
 }
 

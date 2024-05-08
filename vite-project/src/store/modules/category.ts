@@ -17,6 +17,7 @@ const useCategoryStore = defineStore('Category', {
   },
 
   actions:{
+
     //获取一级分类的数据
     async fetchC1List(){
       let result:CategoryResponseData = await reqC1();
@@ -64,7 +65,17 @@ const useCategoryStore = defineStore('Category', {
       this.fetchC3List();
     },
 
+    clearData() {
+      this.c1ID = '';
+      this.c1List=[];
+      this.c2ID='';
+      this.c2List=[];
+      this.c3ID='';
+      this.c3List=[];
+    },
+
   },
+
   
   getters: {},
 
