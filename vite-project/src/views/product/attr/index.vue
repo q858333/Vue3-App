@@ -18,7 +18,11 @@
                     <el-table-column label="操作" width="200">
                         <template #default="{ row }">
                             <el-button type="primary" size="small" @click="editClick(row)">编辑</el-button>
-                            <el-button type="danger" size="small" @click="deleteClick(row)">删除</el-button>
+                            <el-popconfirm title="Are you sure to delete?" icon="Delete" icon-color="red" width="250" @confirm=deleteClick(row)>
+                            <template #reference>
+                                <el-button type="danger" size="small">删除</el-button>
+                            </template>
+                            </el-popconfirm>
                         </template>
                     </el-table-column>
 
@@ -36,14 +40,18 @@
                 <el-table border style="margin: 10px 0px;" :data="currentAttrModel.attrValueList">
                     <el-table-column label="序号" type="index" width="100" align="center"></el-table-column>
                     <el-table-column label="属性值名称">
-                        <template #default="{ row }">
-                            <el-input v-if="row.isEditing" v-model="row.valueName" placeholder="输入属性值名称" @blur="tagCancelEdit(row)"></el-input>
-                            <div v-else @click="tagStartEdit(row)" style="background-color: bisque;">{{ row.valueName }}</div>
+                        <template #default="{ row ,$index}">
+                            <el-input :ref="(vc:any)=>inputRef(vc,$index)" v-if="row.isEditing" v-model="row.valueName" placeholder="输入属性值名称" @blur="tagCancelEdit(row)"></el-input>
+                            <div v-else @click="tagStartEdit(row,$index)" style="background-color: bisque;">{{ row.valueName }}</div>
                         </template>
                     </el-table-column>
                     <el-table-column label="属性值操作">
                         <template #default="{ row }">
-                            <el-button type="danger" size="small" @click="tagDeleteClick(row)">删除</el-button>
+                            <el-popconfirm title="Are you sure to delete?" icon="Delete" icon-color="red" width="250" @confirm=tagDeleteClick(row)>
+                            <template #reference>
+                                <el-button type="danger" size="small">删除</el-button>
+                            </template>
+                            </el-popconfirm>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -65,10 +73,12 @@ import useCategoryStore from '@/store/modules/category';
 import { reqAddOrUpdateAttr, reqAttrList } from '@/api/product/attr'
 import type { AttrListResponseData, AttrModel, AttrTagModel } from '@/api/product/attr/type'
 import { ElMessage } from 'element-plus';
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
 let attrList = ref<AttrModel[]>([]);
 
 let isShowList = ref(true);
+let tagInputList = ref<any[]>([]);
+
 let useCategory = useCategoryStore();
 
 let currentAttrModel = ref<AttrModel>({
@@ -106,14 +116,12 @@ function addClick() {
 
 
 function editClick(row: AttrModel) {
-    console.log(row);
-    isShowList.value = false;
     currentAttrModel.value = row;
+    isShowList.value = false;
 
 }
 
 function deleteClick(row: AttrModel) {
-    console.log(row);
     currentAttrModel.value = row;
 
 }
@@ -146,8 +154,11 @@ function tagCancelEdit (row: AttrTagModel) {
     }
 }
 
-function tagStartEdit (row: AttrTagModel) {
+function tagStartEdit (row: AttrTagModel,$index:number) {
     row.isEditing = true;
+    nextTick(() => {
+        tagInputList.value[$index].focus();
+    });
 }
 
 
@@ -166,7 +177,6 @@ async function saveClick() {
       }
     }
 
-
     let result = await reqAddOrUpdateAttr(currentAttrModel.value);
     if (result.code == 200) {
         ElMessage.success(currentAttrModel.value.id ? '修改成功' : '添加成功');
@@ -182,7 +192,15 @@ function addAttrClick() {
         valueName: '',
         isEditing: true,
     })
+    nextTick(() => {
+        tagInputList.value[tagInputList.value.length-1].focus();
+    });
 
+
+}
+
+function inputRef (vc: any,$index:number) {
+    tagInputList.value[$index] = vc;
 
 }
 
