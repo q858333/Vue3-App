@@ -2,7 +2,7 @@ import { ResponseData } from "@/api/base/type"
 
 
 export interface SPUModel {
-    id: number
+    id?: number
     spuName: string
     description: string
     category3Id: number

@@ -91,8 +91,8 @@ let currentAttrModel = ref<AttrModel>({
 })
 
 onBeforeUnmount(()=>{
-    console.log("onBeforeUnmount");
-    useCategory.clearData();
+    //清空仓库数据
+    useCategory.$reset();
 });
 
 function c3Change() {

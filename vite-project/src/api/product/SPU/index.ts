@@ -1,6 +1,6 @@
 
 import request from '@/utils/request'
-import {SPUListResponseData} from './type'
+import type {SPUListResponseData} from './type'
 
 enum API {
     SPU_LIST = '/admin/product/',
