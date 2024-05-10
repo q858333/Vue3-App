@@ -31,7 +31,7 @@
                 <skuForm></skuForm>
             </div>
             <div v-show="scene == 2">
-                <spuForm @cancelClick="changeDefaultScene" @saveClick="changeDefaultScene"></spuForm>
+                <spuForm ref="spuRef" @cancelClick="changeDefaultScene" @saveClick="changeDefaultScene"></spuForm>
             </div>
         </el-card>
     </div>
@@ -40,12 +40,15 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import Category from '@/components/Category.vue';
-import {reqSPUList} from '@/api/product/SPU';
+import {reqSPUList, reqSPUImageList} from '@/api/product/SPU';
+
 import useCategoryStore from '@/store/modules/category';
 import type {SPUListResponseData,SPUModel} from  '@/api/product/SPU/type';
 import { ElMessage } from 'element-plus';
 import skuForm from './skuForm.vue';
 import spuForm from './spuForm.vue';
+
+let spuRef = ref();
 
 //当前页
 let currentPage = ref(1);
@@ -58,7 +61,14 @@ let useCategory = useCategoryStore();
 //SPU列表
 let spuList = ref<SPUModel[]>([]);
 //场景 0 默认。1 sku。2 spu
-let scene = ref(2);
+let scene = ref(0);
+
+let selectedSpuModel = ref<SPUModel>({
+    spuName: '',
+    description: '',
+    tmId: 0,
+    category3Id: 0,
+});
 
 onBeforeUnmount(()=>{
     useCategory.$reset();
@@ -98,11 +108,15 @@ function addSpuClick () {
 
 function addSKUClick (row:SPUModel) {
     scene.value = 1;
+    selectedSpuModel.value = row;
 
 }
 
-function editClick (row:SPUModel) {
+async function editClick (row:SPUModel) {
+    // selectedSpuModel.value = row;
     scene.value = 2;
+    spuRef.value.initData(row);
+ 
 
 }
 
@@ -116,6 +130,8 @@ function deleteClick (row:SPUModel) {
 
 function changeDefaultScene () {
     scene.value = 0;
+    c3Change();
+
 }
 
 </script>
