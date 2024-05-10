@@ -4,7 +4,7 @@
             <el-input placeholder="输入名称" v-model="spuModel.spuName"></el-input>
         </el-form-item>
         <el-form-item label="SPU品牌">
-            <el-select style="width: 200px;" v-model="spuModel.id" placeholder='选择品牌'>
+            <el-select style="width: 200px;" v-model="spuModel.tmId" placeholder='选择品牌'>
                 <el-option v-for="(item) in trademarkList" :label="item.tmName" :value="item.id"
                     :key="item.id"></el-option>
             </el-select>
@@ -79,8 +79,9 @@ let allPropList = ref<SPUAllAtteModel[]>([]);
 let spuModel = ref<SPUModel>({
     spuName: '',
     description: '',
-    tmId: 0,
+    tmId: '',
     spuImageList: [],
+    spuSaleAttrList: [],
 });
 let imgList = ref<SPUImageModel[]>([]);
 
@@ -172,6 +173,7 @@ async function saveClick() {
         }
     });
 
+    console.log("saveClick", spuModel.value);
 
     let res = await reqAddOrUpdateSPU(spuModel.value);
     if (res.code == 200) {
@@ -251,6 +253,7 @@ function addAttrClick() {
 
     let list =seletedSaleAttr.value.split('|');
     if(list.length != 2) {
+        ElMessage.error('list!=2');
         return;
     }
     spuModel.value.spuSaleAttrList?.push({
@@ -264,29 +267,62 @@ function addAttrClick() {
 
 
 //初始化
-async function initData(spu: SPUModel) {
+async function initAddSPUData(c3ID:number) {
+    console.log("initAddSPUData",c3ID);
+    spuModel.value = {
+        spuName: '',
+        description: '',
+        tmId: '',
+        spuImageList: [],
+        category3Id: c3ID,
+        spuSaleAttrList: [],
+    };
+    imgList.value = [];
 
+    if (trademarkList.value.length == 0) {
+        fetchAllTradeMark();
+    }
+    
+    if(allPropList.value.length == 0) {
+        let res:SPUAllAtteListResponseData = await reqSPUAllAttrList();
+        if (res.code == 200) {
+            allPropList.value = res.data;
+        } else {
+         ElMessage.error('获取销售属性失败');
+        }
+    }
+    
+
+}
+
+async function initEditSPUData(spu: SPUModel) {
     spuModel.value = cloneDeep(spu);
     if (trademarkList.value.length == 0) {
         fetchAllTradeMark();
     }
-
     const requests = [reqSPUImageList(spu.id ?? 0), reqSPUAttrList(spu.id ?? 0), reqSPUAllAttrList()];
 
     try {
         const responses = await Promise.all(requests);
         // 所有请求完成后的处理逻辑
         let imageRes: SPUImageListResponseData = responses[0] as SPUImageListResponseData;
-        imgList.value = imageRes.data.map((item) => {
+        if(imageRes.code == 200) {
+            imgList.value = imageRes.data.map((item) => {
             return {
                 name: item.imgName,
                 url: item.imgUrl,
             }
-        });
+         });
+        }
+        
         let attrRes: SPUAtteListResponseData = responses[1] as SPUAtteListResponseData;
-        spuModel.value.spuSaleAttrList = attrRes.data;
+        if(attrRes.code == 200) {
+            spuModel.value.spuSaleAttrList = attrRes.data;
+        }
         let allAttrRes: SPUAllAtteListResponseData = responses[2] as SPUAllAtteListResponseData;
-        allPropList.value = allAttrRes.data;
+        if(allAttrRes.code == 200) {
+            allPropList.value = allAttrRes.data;
+        }
     } catch (error) {
         // 错误处理逻辑
         ElMessage.error('获取SPU信息失败');
@@ -306,9 +342,7 @@ let unSelectedSaleAttrList = computed(() => {
 });
 
 //对外暴漏的方法
-defineExpose({
-    initData
-})
+defineExpose({initEditSPUData,initAddSPUData})
 </script>
 
 <style scoped lang="scss"></style>

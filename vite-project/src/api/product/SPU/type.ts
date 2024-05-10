@@ -6,7 +6,7 @@ export interface SPUModel {
     spuName: string
     description: string
     category3Id?: number
-    tmId: number
+    tmId: number|string
     spuSaleAttrList?: SPUAttrModel[]
     spuImageList?: SPUImageModel[]
     spuPosterList?:[]

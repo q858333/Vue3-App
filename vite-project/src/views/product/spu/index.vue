@@ -103,19 +103,19 @@ async function c3Change() {
 
 function addSpuClick () {
     scene.value = 2;
+    spuRef.value.initAddSPUData(useCategory.c3ID);
 
 }
 
 function addSKUClick (row:SPUModel) {
     scene.value = 1;
-    selectedSpuModel.value = row;
+
 
 }
 
 async function editClick (row:SPUModel) {
-    // selectedSpuModel.value = row;
     scene.value = 2;
-    spuRef.value.initData(row);
+    spuRef.value.initEditSPUData(row);
  
 
 }
