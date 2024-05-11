@@ -26,8 +26,8 @@
                 :background="true" layout="prev, pager, next ,->, total, sizes,jumper" :total="total"
                 @size-change="handleSizeChange" @current-change="handleCurrentChange" />
             </div>
-            <div v-show="scene == 1">
-                <skuForm></skuForm>
+            <div v-show="scene == 1" >
+                <skuForm @cancelClick="changeDefaultScene" @saveClick="changeDefaultScene"></skuForm>
             </div>
             <div v-show="scene == 2">
                 <spuForm ref="spuRef" @cancelClick="changeDefaultScene" @saveClick="changeDefaultScene"></spuForm>
@@ -60,7 +60,7 @@ let useCategory = useCategoryStore();
 //SPU列表
 let spuList = ref<SPUModel[]>([]);
 //场景 0 默认。1 sku。2 spu
-let scene = ref(0);
+let scene = ref(1);
 
 onBeforeUnmount(()=>{
     useCategory.$reset();
@@ -122,6 +122,7 @@ function deleteClick (row:SPUModel) {
 }
 
 function changeDefaultScene () {
+    console.log('changeDefaultScene');
     scene.value = 0;
     c3Change();
 
