@@ -1,8 +1,7 @@
 <template>
     <div>
         <Category @c3Change="c3Change" :enable="scene==0"></Category>
-    </div>
-    <div>
+
         <el-card style="margin: 10px 0px;">
             <div v-show="scene==0">
                 <el-button type="primary" @click="addSpuClick" :disabled="!useCategory.c3ID">添加SPU</el-button>
@@ -40,7 +39,7 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import Category from '@/components/Category.vue';
-import {reqSPUList, reqSPUImageList} from '@/api/product/SPU';
+import {reqSPUList} from '@/api/product/SPU';
 
 import useCategoryStore from '@/store/modules/category';
 import type {SPUListResponseData,SPUModel} from  '@/api/product/SPU/type';
@@ -63,16 +62,10 @@ let spuList = ref<SPUModel[]>([]);
 //场景 0 默认。1 sku。2 spu
 let scene = ref(0);
 
-let selectedSpuModel = ref<SPUModel>({
-    spuName: '',
-    description: '',
-    tmId: 0,
-    category3Id: 0,
-});
-
 onBeforeUnmount(()=>{
     useCategory.$reset();
 })
+
 
 onMounted(() => {
     console.log('onMounted');
@@ -136,6 +129,6 @@ function changeDefaultScene () {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

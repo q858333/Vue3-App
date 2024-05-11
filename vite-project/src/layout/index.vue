@@ -1,18 +1,18 @@
 <template>
     <div>
-        <div class="layout-menu" :class="{fold:useSetting.isfold}">
+        <div class="layout-menu" :class="{fold:useSetting.isFold}">
             <Logo></Logo>
             <el-scrollbar class="scrollbar">
-                    <el-menu background-color="#001529" text-color="white" :default-active="$useRoute.path" :collapse="useSetting.isfold">
+                    <el-menu background-color="#001529" text-color="white" :default-active="$useRoute.path" :collapse="useSetting.isFold">
                         <Menu :menuList="useUser.menuRoutes"></Menu>
                     </el-menu>
             </el-scrollbar>
 
         </div>
-        <div class="layout-tabbar" :class="{fold:useSetting.isfold}">
+        <div class="layout-tabbar" :class="{fold:useSetting.isFold}">
             <Tabbar></Tabbar>
         </div>
-        <div class="layout-content" :class="{fold:useSetting.isfold}" >
+        <div class="layout-content" :class="{fold:useSetting.isFold}" >
             <Content></Content>
         </div>
 

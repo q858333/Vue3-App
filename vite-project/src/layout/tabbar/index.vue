@@ -2,7 +2,7 @@
     <div class="tabbar">
         <div class="tabbar_left">
             <el-icon style="margin: 0 10px;" @click="changeFoldStatus">
-                <component :is="useSetting.isfold?'Fold':'Expand'"></component>
+                <component :is="useSetting.isFold?'Fold':'Expand'"></component>
             </el-icon>
             <el-breadcrumb separator-icon="ArrowRight">
                 <el-breadcrumb-item  v-for="(item,index) in $useRoute.matched" :key="index" v-show="item.meta.title" :to="{ path:item.path }">
@@ -48,7 +48,7 @@ let $useRouter = useRouter();
 
 console.log('$useRoute',$useRoute);
 function changeFoldStatus () {
-    useSetting.isfold = !useSetting.isfold;
+    useSetting.isFold = !useSetting.isFold;
 
 }
 
