@@ -28,6 +28,8 @@ export interface AttrTagModel {
     valueName:string
     attrId?:number
     isEditing?:boolean
+    valueId?:number
+
 }
 
 export interface AttrModel {
@@ -36,6 +38,8 @@ export interface AttrModel {
     categoryId:number|string
     categoryLevel:number
     attrValueList:AttrTagModel[]
+    selectedString?: string
+
 }
 
 export interface AttrListResponseData extends ResponseData {

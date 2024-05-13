@@ -1,11 +1,13 @@
 import { ResponseData } from "@/api/base/type"
-import {TradeMark} from '@/api/product/trademark/type'
+import type {TradeMark} from '@/api/product/trademark/type'
+import type { AttrTagModel } from "../attr/type"
 
 export interface SPUModel {
+    
     id?: number
     spuName: string
     description: string
-    category3Id?: number
+    category3Id?: number|string
     tmId: number|string
     spuSaleAttrList?: SPUAttrModel[]
     spuImageList?: SPUImageModel[]
@@ -43,7 +45,7 @@ export interface SPUSaleAttrModel {
     id?: number
     isChecked?: string
     saleAttrValueName: string
-    saleAttrName: string
+    saleAttrName?: string
     spuId?: number
 }
 
@@ -54,6 +56,7 @@ export interface SPUAttrModel {
     spuId?: number
     spuSaleAttrValueList?: SPUSaleAttrModel[]
     isEditing?:boolean//是否正在编辑
+    selectedString?: string
 }
     
 
@@ -69,3 +72,17 @@ export interface SPUAllAtteModel extends ResponseData {
 export interface SPUAllAtteListResponseData extends ResponseData {
     data:SPUAllAtteModel[]
 } 
+
+
+export interface SKUModel {
+    category3Id:          number|string;
+    spuId:                number;
+    skuName:              string;
+    price:                number;
+    skuDesc:              string;
+    skuAttrValueList:     AttrTagModel[];
+    skuDefaultImg:        string;
+    // skuSaleAttrValueList?: SPUSaleAttrModel[];
+    tmId?:                number|string;
+    weight:               number;
+}
