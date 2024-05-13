@@ -151,7 +151,8 @@ async function deleteClick (row:SPUModel) {
     let result = await reqDeleteSPU(row.id??0);
     if(result.code == 200) {
         ElMessage.success('删除成功');
-        currentPage.value = 1;
+        
+        currentPage.value = (spuList.value.length >= 1 && currentPage.value > 1 ? currentPage.value - 1 : currentPage.value);
         c3Change();
     }  else {
         ElMessage.error('删除失败');
