@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import Category from '@/components/Category.vue';
-import {reqFindSKUList, reqSPUList} from '@/api/product/SPU';
+import {reqFindSKUList, reqSPUList, reqDeleteSPU} from '@/api/product/SPU';
 
 import useCategoryStore from '@/store/modules/category';
 import type {SKUModel, SPUListResponseData,SPUModel} from  '@/api/product/SPU/type';
@@ -99,7 +99,7 @@ function handleCurrentChange () {
 function handleSizeChange () {
     currentPage.value = 1;
     c3Change();
-}
+}d
 
 async function c3Change() {
     if(!useCategory.c3ID){
@@ -131,7 +131,6 @@ function addSKUClick (row:SPUModel) {
 async function editClick (row:SPUModel) {
     scene.value = 2;
     spuRef.value.initEditSPUData(row);
- 
 
 }
 
@@ -148,7 +147,15 @@ async function infoClick (row:SPUModel) {
 
 }
 
-function deleteClick (row:SPUModel) {
+async function deleteClick (row:SPUModel) {
+    let result = await reqDeleteSPU(row.id??0);
+    if(result.code == 200) {
+        ElMessage.success('删除成功');
+        currentPage.value = 1;
+        c3Change();
+    }  else {
+        ElMessage.error('删除失败');
+    }
 
 }
 

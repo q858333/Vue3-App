@@ -12,6 +12,7 @@ enum API {
     SPU_UPDATE = '/admin/product/updateSpuInfo',
     SPU_ADD_SKU = '/admin/product/saveSkuInfo',
     FIND_SKU_LIST = '/admin/product/findBySpuId/',
+    DELETE_SPU = '/admin/product/deleteSpu/'
 }
 
 //获取已有spu列表
@@ -36,4 +37,5 @@ export const reqAddOrUpdateSPU = (data: SPUModel) => {
 export const reqAddSKU = (data: SKUModel) => request.post<any, any>(API.SPU_ADD_SKU, data);
 //获取spu下的sku列表
 export const reqFindSKUList = (spuId:number) => request.get<any, SKUListResponseData>(API.FIND_SKU_LIST+spuId);
-
+//删除spu
+export const reqDeleteSPU = (id: number) => request.delete<any, any>(API.DELETE_SPU+id);
