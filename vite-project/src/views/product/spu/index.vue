@@ -27,10 +27,10 @@
                 @size-change="handleSizeChange" @current-change="handleCurrentChange" />
             </div>
             <div v-show="scene == 1" >
-                <skuForm @cancelClick="changeDefaultScene" @saveClick="changeDefaultScene"></skuForm>
+                <skuForm ref='skuRef' @cancelClick="changeDefaultScene" @saveClick="changeDefaultScene"></skuForm>
             </div>
             <div v-show="scene == 2">
-                <spuForm ref="spuRef" @cancelClick="changeDefaultScene" @saveClick="changeDefaultScene"></spuForm>
+                <spuForm ref='spuRef' @cancelClick="changeDefaultScene" @saveClick="changeDefaultScene"></spuForm>
             </div>
         </el-card>
     </div>
@@ -48,6 +48,7 @@ import skuForm from './skuForm.vue';
 import spuForm from './spuForm.vue';
 
 let spuRef = ref();
+let skuRef = ref();
 
 //当前页
 let currentPage = ref(1);
@@ -60,7 +61,7 @@ let useCategory = useCategoryStore();
 //SPU列表
 let spuList = ref<SPUModel[]>([]);
 //场景 0 默认。1 sku。2 spu
-let scene = ref(1);
+let scene = ref(0);
 
 onBeforeUnmount(()=>{
     useCategory.$reset();
@@ -102,6 +103,7 @@ function addSpuClick () {
 
 function addSKUClick (row:SPUModel) {
     scene.value = 1;
+    skuRef.value.initData(useCategory.c1ID,useCategory.c2ID,row);
 
 
 }

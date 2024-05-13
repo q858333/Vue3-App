@@ -13,7 +13,7 @@ enum API {
 }
 
 //获取已有spu列表
-export const reqSPUList = (page: number,pageSize:number,c3ID:number|string) => request.get<any, SPUListResponseData>(API.SPU_LIST+`/${page}/${pageSize}?category3Id=${c3ID}`);
+export const reqSPUList = (page: number,pageSize:number,c3ID:number|string) => request.get<any, SPUListResponseData>(API.SPU_LIST+`${page}/${pageSize}?category3Id=${c3ID}`);
 //获取全部品牌
 export const reqAllTrademarkList = () => request.get<any, AllTradeMarkListResponseData>(API.ALL_TRADEMARK_LIST);
 //获取某个spu图片列表
