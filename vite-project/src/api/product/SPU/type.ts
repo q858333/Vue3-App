@@ -82,7 +82,11 @@ export interface SKUModel {
     skuDesc:              string;
     skuAttrValueList:     AttrTagModel[];
     skuDefaultImg:        string;
-    // skuSaleAttrValueList?: SPUSaleAttrModel[];
+    skuSaleAttrValueList?: SPUSaleAttrModel[];
     tmId?:                number|string;
     weight:               number;
+}
+
+export interface SKUListResponseData extends ResponseData {
+    data: SKUModel[]
 }

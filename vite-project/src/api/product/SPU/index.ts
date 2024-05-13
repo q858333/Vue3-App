@@ -1,6 +1,6 @@
 
 import request from '@/utils/request'
-import type {SKUModel,SPUListResponseData, AllTradeMarkListResponseData, SPUImageListResponseData, SPUAtteListResponseData,SPUAllAtteListResponseData, SPUModel} from './type'
+import type {SKUListResponseData,SKUModel,SPUListResponseData, AllTradeMarkListResponseData, SPUImageListResponseData, SPUAtteListResponseData,SPUAllAtteListResponseData, SPUModel} from './type'
 
 enum API {
     SPU_LIST = '/admin/product/',
@@ -11,6 +11,7 @@ enum API {
     SPU_ADD = '/admin/product/saveSpuInfo',
     SPU_UPDATE = '/admin/product/updateSpuInfo',
     SPU_ADD_SKU = '/admin/product/saveSkuInfo',
+    FIND_SKU_LIST = '/admin/product/findBySpuId/',
 }
 
 //获取已有spu列表
@@ -33,5 +34,6 @@ export const reqAddOrUpdateSPU = (data: SPUModel) => {
 }
 //添加sku   
 export const reqAddSKU = (data: SKUModel) => request.post<any, any>(API.SPU_ADD_SKU, data);
-
+//获取spu下的sku列表
+export const reqFindSKUList = (spuId:number) => request.get<any, SKUListResponseData>(API.FIND_SKU_LIST+spuId);
 

@@ -33,19 +33,39 @@
                 <spuForm ref='spuRef' @cancelClick="changeDefaultScene" @saveClick="changeDefaultScene"></spuForm>
             </div>
         </el-card>
+
+        <el-dialog v-model="skuListDialogShow" title="SKU列表">
+            <el-table border :data="skuList">
+                <el-table-column label="SKU名称" prop="skuName"></el-table-column>
+                <el-table-column label="SKU价格" prop="price"></el-table-column>
+                <el-table-column label="SKU重量" prop="weight"></el-table-column>
+                <el-table-column label="SKU图片" >
+                    <template #default="{ row }">
+                        <img :src="row.skuDefaultImg" :alt="row.skuDesc" style="width: 100px;height: 100px;" />
+                    </template>
+                </el-table-column>
+
+            </el-table>
+
+
+        </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import Category from '@/components/Category.vue';
-import {reqSPUList} from '@/api/product/SPU';
+import {reqFindSKUList, reqSPUList} from '@/api/product/SPU';
 
 import useCategoryStore from '@/store/modules/category';
-import type {SPUListResponseData,SPUModel} from  '@/api/product/SPU/type';
+import type {SKUModel, SPUListResponseData,SPUModel} from  '@/api/product/SPU/type';
 import { ElMessage } from 'element-plus';
 import skuForm from './skuForm.vue';
 import spuForm from './spuForm.vue';
+
+//sku弹窗
+let skuListDialogShow = ref(false);
+let skuList = ref<SKUModel[]>([]);
 
 let spuRef = ref();
 let skuRef = ref();
@@ -115,7 +135,16 @@ async function editClick (row:SPUModel) {
 
 }
 
-function infoClick (row:SPUModel) {
+async function infoClick (row:SPUModel) {
+    let result = await reqFindSKUList(row.id??0);
+    if(result.code == 200){
+        skuListDialogShow.value = true;
+        skuList.value = result.data;
+    } else {
+        ElMessage.error('获取SKU列表失败');
+    }
+    console.log(result);
+
 
 }
 

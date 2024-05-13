@@ -113,7 +113,7 @@ skuModel = ref<SKUModel>(
         skuDesc: '',
         skuAttrValueList: [],
         skuDefaultImg: '',
-        // skuSaleAttrValueList: [],
+        skuSaleAttrValueList: [],
         weight: 0,
     }
     );
@@ -143,22 +143,22 @@ async function saveClick() {
         return pre;
     }, []);
 
-    // spuAttrList.value.map((item) => {
-    //     if (item.selectedString != '' && item.selectedString != null) {
-    //         let arr = item.selectedString?.split('|');
-    //         if (arr.length == 3) {
-    //             let attrId = parseInt(arr[0]);
-    //             let id = parseInt(arr[1]);
-    //             let saleAttrValueName = arr[2]
-    //             skuModel.value.skuSaleAttrValueList.push({
-    //                 id: id,
-    //                 baseSaleAttrId: attrId,
-    //                 saleAttrValueName: saleAttrValueName,
-    //             });
-    //         }
-    //     }
+    spuAttrList.value.map((item) => {
+        if (item.selectedString != '' && item.selectedString != null) {
+            let arr = item.selectedString?.split('|');
+            if (arr.length == 3) {
+                let attrId = parseInt(arr[0]);
+                let id = parseInt(arr[1]);
+                let saleAttrValueName = arr[2]
+                skuModel.value.skuSaleAttrValueList.push({
+                    id: id,
+                    baseSaleAttrId: attrId,
+                    saleAttrValueName: saleAttrValueName,
+                });
+            }
+        }
 
-    // });
+    });
 
     let result = await reqAddSKU(skuModel.value);
     if (result.code == 200) {
