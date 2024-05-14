@@ -77,7 +77,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import type { AllSKUListResponseData,SKUDetailResponseData} from '@/api/product/SKU/type';
-import { reqSKUList, reqChangeSKUSaleStatus,reqSKUDetail } from '@/api/product/SKU';
+import { reqSKUList, reqChangeSKUSaleStatus,reqSKUDetail,reqDeleteSKU } from '@/api/product/SKU';
 import { ElMessage } from 'element-plus';
 import type { SKUModel } from '@/api/product/SPU/type';
 // 当前页
@@ -143,7 +143,16 @@ async function infoClick(row: SKUModel) {
     }
 }
 //删除按钮
-function deleteClick(row: SKUModel) {
+async function deleteClick(row: SKUModel) {
+    let result = await reqDeleteSKU(row.id??0);
+    if(result.code == 200) {
+        ElMessage.success('删除成功');
+        currentPage.value = (skuList.value.length >= 1 && currentPage.value > 1 ? currentPage.value - 1 : currentPage.value);
+        fetchSKUList();
+    } else {
+        ElMessage.error('删除失败');
+    }
+
 
 }
 //上架下架按钮
@@ -181,19 +190,4 @@ async function saleClick(row: SKUModel) {
 
 }
 
-.el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
-  text-align: center;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
 </style>

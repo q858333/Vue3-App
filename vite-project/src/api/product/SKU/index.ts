@@ -6,6 +6,7 @@ enum API {
    SALE_SKU = '/admin/product/onSale/',
    CANCEL_SALE_SKU = '/admin/product/cancelSale/',
    SKU_DETAIL = '/admin/product/getSkuInfo/',
+   DELETE_SKU = '/admin/product/deleteSku/'
 
 }
 
@@ -22,3 +23,5 @@ export const reqChangeSKUSaleStatus = (skuId: number, isSale: number) => {
 };
 //获取sku详情
 export const reqSKUDetail = (skuId: number) => request.get<any, SKUDetailResponseData>(API.SKU_DETAIL+skuId);
+//删除sku
+export const reqDeleteSKU = (skuId: number) => request.delete<any, any>(API.DELETE_SKU+skuId);
