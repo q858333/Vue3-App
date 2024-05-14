@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { onMounted,ref } from 'vue';
 import type {AllSKUListResponseData} from '@/api/product/SKU/type';
-import {reqSKUList} from '@/api/product/SKU';
+import {reqSKUList,reqChangeSKUSaleStatus} from '@/api/product/SKU';
 import { ElMessage } from 'element-plus';
 import type { SKUModel } from '@/api/product/SPU/type';
 // 当前页
@@ -92,13 +92,25 @@ function deleteClick (row:SKUModel) {
 
 }
 //上架下架按钮
-function saleClick (row:SKUModel) {
+async function saleClick (row:SKUModel) {
+    let isSale = row.isSale;
     if(row.isSale == 0) {
-        row.isSale = 1;
+        isSale = 1;
     } else {
-        row.isSale = 0;
+        isSale = 0;
     }
-
+    //调用接口
+    let result = await reqChangeSKUSaleStatus(row.id??0,isSale);
+    if(result.code == 200){
+        if(isSale == 0 ){
+            ElMessage.warning('下架成功');
+        } else {
+            ElMessage.success('上架成功');
+        }
+        row.isSale = isSale;
+    } else {
+        ElMessage.error('操作失败');
+    }
 }
 
 

@@ -75,6 +75,7 @@ export interface SPUAllAtteListResponseData extends ResponseData {
 
 
 export interface SKUModel {
+    id?:                  number;
     category3Id:          number|string;
     spuId:                number;
     skuName:              string;
