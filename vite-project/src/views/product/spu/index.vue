@@ -99,7 +99,7 @@ function handleCurrentChange () {
 function handleSizeChange () {
     currentPage.value = 1;
     c3Change();
-}d
+}
 
 async function c3Change() {
     if(!useCategory.c3ID){
