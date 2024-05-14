@@ -87,6 +87,7 @@ export interface SKUModel {
     tmId?:                number|string;
     weight:               number;
     isSale?:              number;
+    skuImageList?:        SPUImageModel[];
 }
 
 export interface SKUListResponseData extends ResponseData {

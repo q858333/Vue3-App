@@ -7,3 +7,7 @@ export interface AllSKUListResponseData extends ResponseData {
         total:number,
     } 
 }
+
+export interface SKUDetailResponseData extends ResponseData {
+    data:  SKUModel,
+}
