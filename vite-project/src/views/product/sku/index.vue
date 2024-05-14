@@ -15,7 +15,7 @@
 
                 <el-table-column label="操作" fixed="right" width="400"> 
                     <template #default="{ row }">
-                        <el-button type="primary" size="small" icon="Top"></el-button>
+                        <el-button type="primary" size="small" :icon="row.isSale==0?'Top':'Bottom'" @click="saleClick(row)"></el-button>
                         <el-button type="primary" size="small" icon="Edit" @click="editClick(row)"></el-button>
                         <el-button type="info" size="small" icon="InfoFilled" @click="infoClick(row)"></el-button>
                         <el-popconfirm title="Are you sure to delete?" icon="Delete" icon-color="red" width="250" @confirm=deleteClick(row)>
@@ -89,6 +89,15 @@ function infoClick (row:SKUModel) {
 }
 //删除按钮
 function deleteClick (row:SKUModel) {
+
+}
+//上架下架按钮
+function saleClick (row:SKUModel) {
+    if(row.isSale == 0) {
+        row.isSale = 1;
+    } else {
+        row.isSale = 0;
+    }
 
 }
 

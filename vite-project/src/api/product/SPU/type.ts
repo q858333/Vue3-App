@@ -85,6 +85,7 @@ export interface SKUModel {
     skuSaleAttrValueList?: SPUSaleAttrModel[];
     tmId?:                number|string;
     weight:               number;
+    isSale?:              number;
 }
 
 export interface SKUListResponseData extends ResponseData {
