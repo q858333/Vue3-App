@@ -44,7 +44,7 @@
         </el-card>
 
         <!-- 抽屉 -->
-        <el-drawer v-model="showUpdateUserDrawer" title="添加用户" @closed="closeDrawer">
+        <el-drawer v-model="showUpdateUserDrawer" :title="currentUserModel.id?'修改用户':'添加用户'" @closed="closeDrawer">
             <el-form ref="formRef" label-width="100" :model="currentUserModel" :rules="formRules">
                 <el-form-item label="用户名" prop="username">
                     <el-input placeholder="请输入用户名" minlength="5" show-word-limit
@@ -53,7 +53,7 @@
                 <el-form-item label="用户昵称" prop="name">
                     <el-input placeholder="请输入用户昵称" v-model="currentUserModel.name"></el-input>
                 </el-form-item>
-                <el-form-item label="用户密码" prop="password">
+                <el-form-item v-show="!currentUserModel.id" label="用户密码" prop="password">
                     <el-input placeholder="请输入用户密码" show-password show-word-limit minlength="6"
                         v-model="currentUserModel.password"></el-input>
                 </el-form-item>
@@ -171,6 +171,10 @@ async function drawerSubmitClick() {
         ElMessage.success('操作成功');
         showUpdateUserDrawer.value = false;
         fetchUserList();
+        if(currentUserModel.value.id != 0 ) {
+            //刷新网页 防止用户修改自己的账号信息
+            window.location.reload();
+        }
     } else {
         ElMessage.error('操作失败');
     }
@@ -184,6 +188,7 @@ function drawerCancelClick() {
 function closeDrawer() {
     formRef.value.resetFields();
     currentUserModel.value = {
+        id:0,
         username: '',
         password: '',
         name: ''
