@@ -45,15 +45,15 @@
 
         <!-- 抽屉 -->
         <el-drawer v-model="showUpdateUserDrawer" title="添加用户" @closed="closeDrawer">
-            <el-form ref="formRef" label-width="100">
-                <el-form-item label="用户名">
+            <el-form ref="formRef" label-width="100" :model="currentUserModel" :rules="formRules">
+                <el-form-item label="用户名" prop="username">
                     <el-input placeholder="请输入用户名" minlength="5" show-word-limit
                         v-model="currentUserModel.username"></el-input>
                 </el-form-item>
-                <el-form-item label="用户昵称">
+                <el-form-item label="用户昵称" prop="name">
                     <el-input placeholder="请输入用户昵称" v-model="currentUserModel.name"></el-input>
                 </el-form-item>
-                <el-form-item label="用户密码">
+                <el-form-item label="用户密码" prop="password">
                     <el-input placeholder="请输入用户密码" show-password show-word-limit minlength="6"
                         v-model="currentUserModel.password"></el-input>
                 </el-form-item>
@@ -91,6 +91,10 @@ let pageSize = ref(10);
 let total = ref(0);
 
 let userList = ref<AclUserModel[]>([]);
+
+
+
+///抽屉数据
 
 let formRef = ref();
 let currentUserModel = ref<AclUserModel>({
@@ -178,6 +182,7 @@ function drawerCancelClick() {
 }
 
 function closeDrawer() {
+    formRef.value.resetFields();
     currentUserModel.value = {
         username: '',
         password: '',
@@ -195,6 +200,41 @@ function handleSizeChange() {
 function handleCurrentChange() {
     fetchUserList();
 }
+
+
+//表单规则
+let formRules = ref({
+    username: [
+        { required: true, trigger: 'blur',validator:checkNameRule }
+    ],
+    name: [
+        { required: true, trigger: 'blur',validator:checkNameRule },
+    ],
+    password: [
+        { required: true, trigger: 'blur',validator:checkPasswordRule },
+    ]
+});
+
+function checkNameRule(rule, value, callback) {
+    if (value.length < 5) {
+        callback(new Error('用户名长度至少5位'));
+    } else if (value.trim() == '') {
+        callback(new Error('不能为空'));
+    } else {
+        callback();
+    }
+}
+
+function checkPasswordRule(rule, value, callback) {
+    if (value.length < 6) {
+        callback(new Error('密码长度至少6位'));
+    } else if (value.trim() == '') {
+        callback(new Error('密码不能为空'));
+    } else {
+        callback();
+    }
+}
+
 
 
 
