@@ -14,8 +14,8 @@
 
         <el-card style="margin: 10px 0px;">
             <el-button type="primary" @click="addUserClick">添加用户</el-button>
-            <el-button type="danger" @click="deleteMultClick">批量删除</el-button>
-            <el-table border style="margin: 10px 0px;" :data="userList">
+            <el-button type="danger" @click="deleteMultClick" :disabled='selectedUserList.length>0?false:true'>批量删除</el-button>
+            <el-table border style="margin: 10px 0px;" :data="userList" @selection-change="selectedUser">
                 <el-table-column align="center" type="selection" widht="50"></el-table-column>
                 <el-table-column align="center" label="#" type="index"></el-table-column>
                 <el-table-column align="center" label="ID" prop="id"></el-table-column>
@@ -105,7 +105,7 @@ import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash';
 
-import { reqAclUserList, reqAddOrUpdateUser, reqSetUserRole, reqUserRoleList } from '@/api/acl/user'
+import { reqAclUserList, reqAddOrUpdateUser, reqSetUserRole, reqUserRoleList,reqDeleteUser } from '@/api/acl/user'
 import type { AclRoleModel, AclUserListResponseData, AclUserModel, AclUserRoleListResponseData,SetRoleForm } from '@/api/acl/user/type';
 
 //是否展示用户数据更新抽屉
@@ -122,6 +122,7 @@ let total = ref(0);
 
 let userList = ref<AclUserModel[]>([]);
 
+let selectedUserList = ref<AclUserModel[]>([]);
 
 
 ///用户信息抽屉数据
@@ -175,7 +176,14 @@ function addUserClick() {
 }
 //批量删除
 function deleteMultClick() {
+    let list:number[] = selectedUserList.value.map((item)=>item.id as number);
+    deleteUser(list);
 
+}
+
+//选择用户
+function selectedUser (list:AclUserModel[]) {
+    selectedUserList.value = list;
 }
 
 ///表格操作
@@ -200,7 +208,20 @@ async function setRoleClick(row: AclUserModel) {
 }
 //删除
 function deleteClick(row: AclUserModel) {
-    console.log("deleteClick", row);
+    deleteUser([row.id as number,]);
+}
+
+///删除接口
+async function deleteUser(list:number[]){
+    let result = await reqDeleteUser(list);
+    if(result.code == 200) {
+        ElMessage.success('删除成功');
+        fetchUserList();
+
+    } else {
+        ElMessage.error('删除失败');
+    }
+
 }
 
 ///抽屉操作
@@ -253,9 +274,10 @@ async function rolesubmitClick() {
     })
 
     let requestData:SetRoleForm = {
-        userId:currentUserModel.value.id??0,
+        userId:currentUserModel.value.id as number,
         roleIdList:userIdList
     }
+
     let result = await reqSetUserRole(requestData);
     if(result.code == 200) {
         ElMessage.success('设置成功');
@@ -265,7 +287,6 @@ async function rolesubmitClick() {
         ElMessage.error('设置失败');
     }
 
-    console.log("rolesubmitClick");
 }
 
 //全选变化

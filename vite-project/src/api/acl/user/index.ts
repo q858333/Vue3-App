@@ -7,7 +7,8 @@ enum API {
     ADD_USER = '/admin/acl/user/save',
     UPDATE_USER = '/admin/acl/user/update',
     USER_ROLE_LIST = '/admin/acl/user/toAssign/',
-    SET_USER_ROLE = '/admin/acl/user/doAssignRole'
+    SET_USER_ROLE = '/admin/acl/user/doAssignRole',
+    DELETE_USER = '/admin/acl/user/batchRemove',
 }
 
 //获取用户列表
@@ -24,3 +25,5 @@ export const reqAddOrUpdateUser = (data: AclUserModel) => {
 export const reqUserRoleList = (userId:number) => request.get<any,AclUserRoleListResponseData>(API.USER_ROLE_LIST+userId);
 //设置用户角色
 export const reqSetUserRole = (data:SetRoleForm)=>request.post<any,any>(API.SET_USER_ROLE,data);
+//删除用户
+export const reqDeleteUser = (idList:number[])=>request.delete<any,any>(API.DELETE_USER,{data:idList});
