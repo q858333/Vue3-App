@@ -1,11 +1,13 @@
 
 import request from '@/utils/request'
-import type { AclUserListResponseData,AclUserModel } from './type';
+import type { AclUserListResponseData,AclUserModel,AclUserRoleListResponseData,SetRoleForm } from './type';
 
 enum API {
     ACL_USER_LIST = '/admin/acl/user/',
     ADD_USER = '/admin/acl/user/save',
     UPDATE_USER = '/admin/acl/user/update',
+    USER_ROLE_LIST = '/admin/acl/user/toAssign/',
+    SET_USER_ROLE = '/admin/acl/user/doAssignRole'
 }
 
 //获取用户列表
@@ -18,3 +20,7 @@ export const reqAddOrUpdateUser = (data: AclUserModel) => {
         return request.post<any, any>(API.ADD_USER, data)
     }
 }
+//获取用户角色
+export const reqUserRoleList = (userId:number) => request.get<any,AclUserRoleListResponseData>(API.USER_ROLE_LIST+userId);
+//设置用户角色
+export const reqSetUserRole = (data:SetRoleForm)=>request.post<any,any>(API.SET_USER_ROLE,data);

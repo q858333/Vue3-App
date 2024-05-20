@@ -19,3 +19,28 @@ export interface AclUserListResponseData extends ResponseData {
     }
 
 }
+
+
+
+export interface AclRoleModel {
+    id?: number
+    roleName?: string
+    remark?: string
+}
+
+
+export interface AclUserRoleListResponseData extends ResponseData {
+    data : {
+        //用户role
+        assignRoles:AclRoleModel[]
+        //所有role
+        allRolesList:AclRoleModel[]
+    }
+
+}
+
+
+export interface SetRoleForm {
+    userId:number
+    roleIdList:number[]
+}
