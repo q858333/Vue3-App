@@ -8,12 +8,13 @@
 </template>
 
 <script setup lang="ts" name="Content">
+import {ref,watch,nextTick} from 'vue';
 import useAppSetting from '@/store/modules/appSetting';
-import {ref,watch,nextTick} from 'vue'
+
 let appSettingStore = useAppSetting();
 
 let flag = ref(true);
-watch(() => appSettingStore.refsh, () => {
+watch(() => appSettingStore.refresh, () => {
     //点击刷新按钮:路由组件销毁
     flag.value = false;
     nextTick(() => {

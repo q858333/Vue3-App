@@ -24,8 +24,10 @@ export interface AclUserListResponseData extends ResponseData {
 
 export interface AclRoleModel {
     id?: number
-    roleName?: string
+    roleName: string
     remark?: string
+    createTime?:string
+    updateTime?:string
 }
 
 

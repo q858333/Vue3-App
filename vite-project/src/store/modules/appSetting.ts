@@ -4,7 +4,7 @@ const useAppSetting = defineStore('appSetting',{
     state: () => {
         return {
             isFold:false,
-            refresh:false
+            refresh:false,
         }
 
     },
