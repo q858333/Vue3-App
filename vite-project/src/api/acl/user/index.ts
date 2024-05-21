@@ -12,7 +12,7 @@ enum API {
 }
 
 //获取用户列表
-export const reqAclUserList = (page: number, limit: number) => request.get<any, AclUserListResponseData>(API.ACL_USER_LIST+`${page}/${limit}`);
+export const reqAclUserList = (page: number, limit: number,username:string) => request.get<any, AclUserListResponseData>(API.ACL_USER_LIST+`${page}/${limit}?username=${username}`);
 //添加或更新用户
 export const reqAddOrUpdateUser = (data: AclUserModel) => {
     if(data.id) {

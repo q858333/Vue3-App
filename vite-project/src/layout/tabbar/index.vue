@@ -71,7 +71,7 @@ function fullScreenClick () {
 }
 
 function refreshClick () {
-
+    useSetting.refresh = !useSetting.refresh;
 
 }
 

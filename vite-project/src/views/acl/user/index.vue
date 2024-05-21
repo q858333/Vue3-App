@@ -6,7 +6,7 @@
                     <el-input placeholder="请输入搜索角色名" v-model='searchText'></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="searchClick">搜索</el-button>
+                    <el-button type="primary" @click="searchClick" :disabled="searchText?false:true">搜索</el-button>
                     <el-button type="primary" @click="resetClick">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -142,13 +142,13 @@ let allRoleList = ref<AclRoleModel[]>([]);
 let userRoleList = ref<AclRoleModel[]>([]);
 
 onMounted(() => {
-    fetchUserList();
+    fetchUserList('');
 
 });
 
 
-async function fetchUserList() {
-    let result: AclUserListResponseData = await reqAclUserList(currentPage.value, pageSize.value);
+async function fetchUserList(username:string) {
+    let result: AclUserListResponseData = await reqAclUserList(currentPage.value, pageSize.value,username);
     if (result.code === 200) {
         userList.value = result.data.records;
         total.value = result.data.total;
@@ -162,12 +162,14 @@ async function fetchUserList() {
 //重置
 function resetClick() {
     searchText.value = '';
-    pageSize.value = 1;
-    fetchUserList();
+    currentPage.value = 1;
+    fetchUserList('');
 }
 //搜索
-function searchClick() {
-    console.log("searchClick");
+async function searchClick() {
+    currentPage.value = 1;
+    fetchUserList(searchText.value);
+
 }
 //添加用户
 function addUserClick() {
@@ -216,7 +218,7 @@ async function deleteUser(list:number[]){
     let result = await reqDeleteUser(list);
     if(result.code == 200) {
         ElMessage.success('删除成功');
-        fetchUserList();
+        fetchUserList('');
 
     } else {
         ElMessage.error('删除失败');
@@ -242,7 +244,7 @@ async function drawerSubmitClick() {
             //刷新网页 防止用户修改自己的账号信息
             window.location.reload();
         } else {
-            fetchUserList();
+            fetchUserList('');
 
         }
     } else {
@@ -282,7 +284,7 @@ async function rolesubmitClick() {
     if(result.code == 200) {
         ElMessage.success('设置成功');
         showSetRoleDrawer.value = false;
-        fetchUserList();
+        fetchUserList('');
     } else {
         ElMessage.error('设置失败');
     }
@@ -307,11 +309,11 @@ function handleCheckedChange (valueList:string[]) {
 //每页显示条数改变
 function handleSizeChange() {
     pageSize.value = 1;
-    fetchUserList();
+    fetchUserList('');
 }
 //当前页改变
 function handleCurrentChange() {
-    fetchUserList();
+    fetchUserList('');
 }
 
 
