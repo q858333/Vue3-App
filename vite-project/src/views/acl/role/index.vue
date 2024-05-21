@@ -37,9 +37,9 @@
                 :background="true" layout="prev, pager, next ,->, total, sizes,jumper" :total="total"
                 @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </el-card>
-        <el-dialog v-model="showRoleEditDialog" :title="selectedRoleModel.id?'更新职位':'添加职位'">
-            <el-form>
-                <el-form-item label="职位名称">
+        <el-dialog v-model="showRoleEditDialog" :title="selectedRoleModel.id?'更新职位':'添加职位'" @closed="closeDialog">
+            <el-form :model="selectedRoleModel" :rules="rules" ref="formRef">
+                <el-form-item label="职位名称" prop="roleName">
                     <el-input placeholder="请输入职位名称" v-model='selectedRoleModel.roleName'></el-input>
                 </el-form-item>
             </el-form>
@@ -79,6 +79,14 @@ let showRoleEditDialog = ref(false);
 let selectedRoleModel = ref<AclRoleModel>({
     roleName:''
 })
+let formRef = ref();
+//表单规则
+let rules = ref({
+    roleName: [
+        { required: true, trigger: 'blur', validator: checkRoleNameRule }
+    ],
+});
+
 
 onMounted(()=>{
     fetchRoleList();
@@ -157,6 +165,20 @@ async function addOrUpdateRole(row:AclRoleModel) {
 ///dialog
 async function confirmClick () {
     addOrUpdateRole(selectedRoleModel.value);
+}
+
+function checkRoleNameRule (rule,value,callback) {
+    if (value.length > 10) {
+        callback(new Error('职位长度做多10位'));
+    } else if (value.trim() == '') {
+        callback(new Error('不能为空'));
+    } else {
+        callback();
+    }
+
+}
+function closeDialog () {
+    formRef.value.resetFields();
 }
 
 </script>
