@@ -37,15 +37,32 @@
                 :background="true" layout="prev, pager, next ,->, total, sizes,jumper" :total="total"
                 @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </el-card>
+        <el-dialog v-model="showRoleEditDialog" :title="selectedRoleModel.id?'更新职位':'添加职位'">
+            <el-form>
+                <el-form-item label="职位名称">
+                    <el-input placeholder="请输入职位名称" v-model='selectedRoleModel.roleName'></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <div>
+                    <el-button @click="showRoleEditDialog = false">取消</el-button>
+                    <el-button :disabled="selectedRoleModel.roleName.length>0?false:true" type="primary" @click="confirmClick">
+                        确认
+                    </el-button>
+                </div>
+            </template>
+
+        </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts">
 import {ref, onMounted} from 'vue';
-import {reqRoleList} from '@/api/acl/role'
+import {reqRoleList,reqAddOrUpdateRole} from '@/api/acl/role'
 import type {RoleListResponseData} from '@/api/acl/role/type'
-import type { AclRoleModel } from "@/api/user/type";
+import type { AclRoleModel } from "@/api/acl/user/type";
 import { ElMessage } from 'element-plus';
+import { cloneDeep } from 'lodash';
 //搜索内容
 let searchText = ref('');
 //当前页
@@ -57,6 +74,11 @@ let total = ref(0);
 //列表数据
 let roleList = ref<AclRoleModel[]>([]);
 
+///弹窗
+let showRoleEditDialog = ref(false);
+let selectedRoleModel = ref<AclRoleModel>({
+    roleName:''
+})
 
 onMounted(()=>{
     fetchRoleList();
@@ -88,15 +110,20 @@ function resetClick () {
 ///分页器
 //翻页
 function handleCurrentChange () {
+    fetchRoleList();
 
 }
 //修改每页大小
 function handleSizeChange () {
-
+    fetchRoleList();
 }
 ///添加职位
 function addRoleClick () {
-    
+    selectedRoleModel.value = {
+        roleName:''
+    }
+    showRoleEditDialog.value = true;
+
 }
 /// 表格
 //分配权限
@@ -104,10 +131,32 @@ function setPrivilegeClick (row:AclRoleModel){
 
 }
 function editClick (row:AclRoleModel) {
+    selectedRoleModel.value = cloneDeep(row);
+    showRoleEditDialog.value = true;
 
 }
 function deleteClick (row:AclRoleModel) {
 
+}
+
+
+async function addOrUpdateRole(row:AclRoleModel) {
+    let result = await reqAddOrUpdateRole(row);
+    if(result.code == 200) {
+        ElMessage.success(row.id?'更新成功':'添加成功');
+        showRoleEditDialog.value = false;
+        fetchRoleList();
+
+    } else {
+        ElMessage.error(row.id?'更新失败':'添加失败');
+    }
+
+    
+}
+
+///dialog
+async function confirmClick () {
+    addOrUpdateRole(selectedRoleModel.value);
 }
 
 </script>
