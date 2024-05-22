@@ -9,6 +9,7 @@ enum API {
     UPDATE_ROLE = '/admin/acl/role/update',
     ROLE_PERMISSION = '/admin/acl/permission/toAssign/',
     ROLE_SET_PERMISSION = '/admin/acl/permission/doAssign',
+    DELETE_ROLE = '/admin/acl/role/remove/',
 
 }
 //获取职位列表
@@ -24,3 +25,5 @@ export const reqAddOrUpdateRole = (data:AclRoleModel)=>{
 export const reqRolePermission = (roleId:number)=>request.get<any,RolePermissionResponseData>(API.ROLE_PERMISSION+roleId);
 //给角色分配权限
 export const reqSetPermission = (roleId:number,permissionId:number[])=>request.post<any,any>(API.ROLE_SET_PERMISSION+`?roleId=${roleId}&permissionId=${permissionId}`);
+//删除橘色
+export const reqDeleteRole = (roleId:number)=>request.delete<any,any>(API.DELETE_ROLE+roleId);

@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { reqRoleList, reqAddOrUpdateRole, reqRolePermission,reqSetPermission} from '@/api/acl/role'
+import { reqRoleList, reqAddOrUpdateRole, reqRolePermission,reqSetPermission,reqDeleteRole} from '@/api/acl/role'
 import type { RoleListResponseData,RolePermissionResponseData,RolePermissionModel } from '@/api/acl/role/type'
 import type { AclRoleModel } from "@/api/acl/user/type";
 import { ElMessage } from 'element-plus';
@@ -188,8 +188,16 @@ function editClick(row: AclRoleModel) {
     showRoleEditDialog.value = true;
 
 }
-function deleteClick(row: AclRoleModel) {
-    selectedRoleModel.value = cloneDeep(row);
+async function deleteClick(row: AclRoleModel) {
+    let result = await reqDeleteRole(row.id as number);
+    if(result.code == 200) {
+        ElMessage.success('删除成功');
+        currentPage.value = (roleList.value.length ==1 ?currentPage.value-1:currentPage.value );
+        fetchRoleList();
+    } else {
+        ElMessage.error('删除失败');
+    }
+
 
 }
 
