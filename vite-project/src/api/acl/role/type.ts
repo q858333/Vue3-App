@@ -19,10 +19,11 @@ export interface RolePermissionResponseData extends ResponseData {
 }
 
 export interface RolePermissionModel {
-    id:number
+    id?:number
     name:string
-    level:number
-    children:RolePermissionModel[]
+    level?:number
+    children?:RolePermissionModel[]
     select?:boolean
     code:string
+    pid?:number
 }
