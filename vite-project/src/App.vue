@@ -53,6 +53,6 @@ function login() {
 
 <style lang="scss" scoped>
 .page {
-  background-color: $base-color;
+  // background-color: $base-color;
 }
 </style>

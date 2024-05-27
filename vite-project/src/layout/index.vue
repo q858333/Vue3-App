@@ -58,7 +58,7 @@ let $useRoute = useRoute();
 
 .layout-tabbar {
     position: fixed;
-    background-color: white;
+    // background-color: white;
     left: $base-menu-width;
     top: 0;
     width: calc(100% - $base-menu-width);

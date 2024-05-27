@@ -11,6 +11,10 @@ import { createPinia } from 'pinia'
 
 import "./router/permission";
 
+//暗黑模式使用
+import 'element-plus/theme-chalk/dark/css-vars.css'
+
+
 
 const app = createApp(App);
 app.use(ElementPlus,{

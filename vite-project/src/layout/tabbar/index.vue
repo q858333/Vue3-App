@@ -5,22 +5,41 @@
                 <component :is="useSetting.isFold?'Fold':'Expand'"></component>
             </el-icon>
             <el-breadcrumb separator-icon="ArrowRight">
-                <el-breadcrumb-item  v-for="(item,index) in $useRoute.matched" :key="index" v-show="item.meta.title" :to="{ path:item.path }">
+                <el-breadcrumb-item v-for="(item, index) in $useRoute.matched" :key="index" v-show="item.meta.title"
+                    :to="{ path: item.path }">
                     <el-icon>
                         <component :is="item.meta.icon"></component>
                     </el-icon>
-                    {{item.meta.title}}
+                    {{ item.meta.title }}
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="tabbar_right">
-            <el-button icon="Refresh" circle @click="refreshClick"/>
-            <el-button icon="FullScreen" circle @click="fullScreenClick"/>
-            <el-button icon="Setting" circle />
+            <el-button icon="Refresh" circle @click="refreshClick" />
+            <el-button icon="FullScreen" circle @click="fullScreenClick" />
+            <el-popover placement="bottom" title="主题设置" width="300" trigger="click">
+                <el-form>
+                    <el-form-item label="主题设置">
+                        <el-color-picker v-model="color" show-alpha :predefine="predefineColors" />
+
+                    </el-form-item>
+                    <el-form-item label="暗黑模式">
+                        <el-switch v-model="isDark" inline-prompt @change="darkChange"
+                            active-icon="Moon" inactive-icon="Sunny" />
+
+                    </el-form-item>
+                </el-form>
+                <template #reference>
+                    <el-button icon="Setting" circle />
+                </template>
+            </el-popover>
+
+
+
             <img :src="useUser.avatar" style="width: 30px; height:30px;margin: 0 10px;border-radius: 50%;" alt="">
             <el-dropdown @command="handleCommand">
                 <span>
-                    {{useUser.username??""}}<el-icon> <arrow-down /></el-icon>
+                    {{ useUser.username ?? "" }}<el-icon> <arrow-down /></el-icon>
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
@@ -38,31 +57,58 @@
 
 import useAppSetting from "@/store/modules/appSetting";
 import useUserStore from "@/store/modules/user";
-import {useRoute, useRouter} from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import pinia from "@/store";
+import {ref} from 'vue'
 let useSetting = useAppSetting();
 let useUser = useUserStore(pinia);
 
 let $useRoute = useRoute();
 let $useRouter = useRouter();
 
-console.log('$useRoute',$useRoute);
-function changeFoldStatus () {
+//暗黑模式
+let isDark = ref(false);
+
+console.log('$useRoute', $useRoute);
+
+//颜色选择
+
+const color = ref('rgba(255, 69, 0, 0.68)')
+const predefineColors = ref([
+  '#ff4500',
+  '#ff8c00',
+  '#ffd700',
+  '#90ee90',
+  '#00ced1',
+  '#1e90ff',
+  '#c71585',
+  'rgba(255, 69, 0, 0.68)',
+  'rgb(255, 120, 0)',
+  'hsv(51, 100, 98)',
+  'hsva(120, 40, 94, 0.5)',
+  'hsl(181, 100%, 37%)',
+  'hsla(209, 100%, 56%, 0.73)',
+  '#c7158577',
+])
+
+
+
+function changeFoldStatus() {
     useSetting.isFold = !useSetting.isFold;
 
 }
 
-function handleCommand(command:string){
-    console.log('handleCommand',command);
-    if(command == "1") {
-                //退出登录
+function handleCommand(command: string) {
+    console.log('handleCommand', command);
+    if (command == "1") {
+        //退出登录
         console.log("logout");
         useUser.userLogout();
-        $useRouter.push({path:'/login',query:{redirect:$useRoute.path}});
+        $useRouter.push({ path: '/login', query: { redirect: $useRoute.path } });
     }
 }
 
-function fullScreenClick () {
+function fullScreenClick() {
     if (document.fullscreenElement) {
         document.exitFullscreen();
     } else {
@@ -70,8 +116,15 @@ function fullScreenClick () {
     }
 }
 
-function refreshClick () {
+function refreshClick() {
     useSetting.refresh = !useSetting.refresh;
+
+}
+
+function darkChange(val:boolean) {
+    console.log('darkChange',val);
+    let html = document.documentElement;
+     html.className = (val == true ? 'dark':'');
 
 }
 
