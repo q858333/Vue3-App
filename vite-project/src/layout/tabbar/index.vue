@@ -17,11 +17,10 @@
         <div class="tabbar_right">
             <el-button icon="Refresh" circle @click="refreshClick" />
             <el-button icon="FullScreen" circle @click="fullScreenClick" />
-            <el-popover placement="bottom" title="主题设置" width="300" trigger="click">
+            <el-popover placement="bottom" title="主题设置" width="200" trigger="click">
                 <el-form>
                     <el-form-item label="主题设置">
-                        <el-color-picker v-model="color" show-alpha :predefine="predefineColors" />
-
+                                <el-color-picker v-model="color" @change="colorChange"/>
                     </el-form-item>
                     <el-form-item label="暗黑模式">
                         <el-switch v-model="isDark" inline-prompt @change="darkChange"
@@ -72,24 +71,8 @@ let isDark = ref(false);
 console.log('$useRoute', $useRoute);
 
 //颜色选择
-
 const color = ref('rgba(255, 69, 0, 0.68)')
-const predefineColors = ref([
-  '#ff4500',
-  '#ff8c00',
-  '#ffd700',
-  '#90ee90',
-  '#00ced1',
-  '#1e90ff',
-  '#c71585',
-  'rgba(255, 69, 0, 0.68)',
-  'rgb(255, 120, 0)',
-  'hsv(51, 100, 98)',
-  'hsva(120, 40, 94, 0.5)',
-  'hsl(181, 100%, 37%)',
-  'hsla(209, 100%, 56%, 0.73)',
-  '#c7158577',
-])
+
 
 
 
@@ -125,6 +108,11 @@ function darkChange(val:boolean) {
     console.log('darkChange',val);
     let html = document.documentElement;
      html.className = (val == true ? 'dark':'');
+
+}
+function colorChange () {
+    let html = document.documentElement;
+    html.style.setProperty('--el-color-primary',color.value);
 
 }
 
