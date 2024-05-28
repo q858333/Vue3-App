@@ -8,16 +8,38 @@
         <div class="number">
             <span v-for="item in totalPeople" class="numberbg">{{item}}</span>
         </div>
-        <div class="charts"></div>
+        <div class="charts" ref="chartsRef"></div>
 
 
     </div>
 </template>
 
 <script setup lang="ts" name="Tourist">
-import {ref} from 'vue'
+import {ref,onMounted} from 'vue'
+import * as echarts from 'echarts';
+import 'echarts-liquidfill'
 
-let totalPeople = ref('111111人');
+let totalPeople = ref('23214人');
+let chartsRef = ref();
+
+onMounted(()=>{
+
+    let charts = echarts.init(chartsRef.value);
+    charts.setOption({
+        title:{
+            title:'统计'
+        },
+        series:{
+            radius: '70%',
+            type: 'liquidFill',
+            data: [0.6],
+        
+           
+        },
+    })
+});
+
+
 </script>
 
 <style scoped lang="scss">
@@ -62,7 +84,6 @@ let totalPeople = ref('111111人');
         }
     }
     .charts {
-        background-color: red;
         width: 100%;
         height: 250px;
     }
