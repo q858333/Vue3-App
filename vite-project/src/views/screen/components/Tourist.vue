@@ -1,0 +1,71 @@
+<template>
+    <div class="bg">
+        <div class="top">
+            <p class="title">实施游客统计</p>
+            <p class="titlebg"></p>
+            <p class="desc">可容纳总量9999人</p>
+        </div>
+        <div class="number">
+            <span v-for="item in totalPeople" class="numberbg">{{item}}</span>
+        </div>
+        <div class="charts"></div>
+
+
+    </div>
+</template>
+
+<script setup lang="ts" name="Tourist">
+import {ref} from 'vue'
+
+let totalPeople = ref('111111人');
+</script>
+
+<style scoped lang="scss">
+.bg {
+    background: url('@/assets/images/screen/dataScreen-main-lb.png') no-repeat;
+    background-size: 100% 100%;
+
+    .top {
+        .title {
+            color: white;
+            font-size: 20px;
+
+        }
+
+        .titlebg {
+            width: 68px;
+            height: 7px;
+            background: url('@/assets/images/screen/dataScreen-title.png') no-repeat;
+            background-size: 100% 100%;
+            margin-top: 10px;
+        }
+        .desc {
+            color: white;
+            font-size: 20px;
+            text-align: right;
+            margin-right: 20px;
+        }
+
+    }
+    .number {
+        display: flex;
+        margin-top: 30px;
+        padding: 0px 15px;
+        .numberbg{
+            flex: 1;
+            height: 40px;
+            background: url('@/assets/images/screen/total.png') no-repeat;
+            background-size: 100% 100%;
+            color: #29fcff;
+            text-align: center;
+            line-height: 40px;
+        }
+    }
+    .charts {
+        background-color: red;
+        width: 100%;
+        height: 250px;
+    }
+
+}
+</style>

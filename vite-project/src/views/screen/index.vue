@@ -3,7 +3,12 @@
         <div class="screen" ref="screenRef">
             <ScreenTop class="top"></ScreenTop>
             <div class="bottom">
-                <div class="left">111231231</div>
+                <div class="left">
+                    <Tourist class="tourist">123</Tourist>
+                    <div class="sex"></div>
+                    <div class="age"></div>
+
+                </div>
                 <div class="center">222</div>
                 <div class="right">111</div>
             </div>
@@ -17,6 +22,7 @@
 
 import {ref, onMounted} from 'vue'
 import ScreenTop from './components/ScreenTop.vue'
+import Tourist from './components/Tourist.vue'
 let screenRef = ref();
 
 onMounted(()=>{
@@ -57,13 +63,31 @@ function changeScreenScale () {
         height: 1080px;
         .top {
             width: 100%;
-            height: 44px;
+            height: 40px;
 
         }
         .bottom {
             display: flex;
             .left {
+                margin-left: 10px;
+                margin-top: 10px;
                 flex: 1;
+                height: 1040px;
+                display: flex;
+                flex-direction: column;
+
+                .tourist {
+                    flex:1.2;
+                }
+                .age {
+                    flex: 1;
+
+                }
+                .sex {
+                    flex: 1;
+
+                }
+                
             }
 
             .center {

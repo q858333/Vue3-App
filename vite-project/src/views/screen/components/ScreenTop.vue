@@ -29,7 +29,6 @@ onBeforeUnmount(()=>{
 onMounted(()=>{
     timer.value = setInterval(() => {
          time.value = moment().format('YYYY年MM月DD日 HH:mm:ss')
-         console.log(111111);
     }, 1000)
     console.log(timer);
 
