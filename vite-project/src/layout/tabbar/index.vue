@@ -20,7 +20,7 @@
             <el-popover placement="bottom" title="主题设置" width="200" trigger="click">
                 <el-form>
                     <el-form-item label="主题设置">
-                                <el-color-picker v-model="color" @change="colorChange"/>
+                            <el-color-picker v-model="color" @change="colorChange"/>
                     </el-form-item>
                     <el-form-item label="暗黑模式">
                         <el-switch v-model="isDark" inline-prompt @change="darkChange"
