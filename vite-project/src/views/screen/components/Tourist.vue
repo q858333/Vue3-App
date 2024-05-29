@@ -30,9 +30,9 @@ onMounted(()=>{
             title:'统计'
         },
         series:{
-            radius: '70%',
+            radius: '80%',
             type: 'liquidFill',
-            data: [0.6],
+            data: [0.6,0.6,0.6],
         
            
         },

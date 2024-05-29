@@ -89,7 +89,6 @@ function changeScreenScale () {
                 }
                 .sex {
                     flex: 1;
-                    background-color: aqua;
 
                 }
                 
