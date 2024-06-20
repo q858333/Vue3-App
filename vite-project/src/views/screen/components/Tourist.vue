@@ -33,8 +33,7 @@ onMounted(()=>{
             radius: '80%',
             type: 'liquidFill',
             data: [0.6,0.6,0.6],
-        
-           
+    
         },
     })
 });

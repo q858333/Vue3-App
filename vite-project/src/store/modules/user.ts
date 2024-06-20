@@ -50,29 +50,29 @@ const useUserStore = defineStore('User', {
       let result: loginResponseData = await reqLogin(data);
       //登录请求:成功200->token
       //登录请求:失败201->登录失败错误的信息
-      // if (result.code == 200) {
+      if (result.code == 200) {
         //pinia仓库存储一下token
         //由于pinia|vuex存储数据其实利用js对象
-        this.token = 'eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWKi5NUrJSSkzJzcxT0lFKrShQsjI0MzQzMTK1NDGvBQApMebnIAAAAA.UG2Qj7F7ASMLBugNG67-wKs0Un6ORrneMkSdio0rKhX0o-fd6BC24T1gCzfVVtsNERPzs4Sjwz8JOyPfLazUSA';//result.data;
+        this.token = result.data;
         SET_TOKEN(this.token);
         //本地存储持久化存储一份
         // SET_TOKEN(result.data as string)
         //能保证当前async函数返回一个成功的promise
         return 'ok'
-      // } else {
-      //   return Promise.reject(new Error("登录失败"))
-      // }
+      } else {
+        return Promise.reject(new Error("登录失败"))
+      }
     },
     //获取用户信息方法
     async userInfo() {
       //获取用户信息进行存储仓库当中[用户头像、名字]
-      // let result: userInfoReponseData = await reqUserInfo();
-      // //如果获取用户信息成功，存储一下用户信息
-      // if (result.code == 200) {
-      //   this.username = result.data.name;
-      //   this.avatar = result.data.avatar;
-      //   console.log("获取用户信息",result.data);
-      //   this.buttons = result.data.buttons;
+      let result: userInfoReponseData = await reqUserInfo();
+      //如果获取用户信息成功，存储一下用户信息
+      if (result.code == 200) {
+        this.username = result.data.name;
+        this.avatar = result.data.avatar;
+        console.log("获取用户信息",result.data);
+        this.buttons = result.data.buttons;
         //计算当前用户需要展示的异步路由
         // const userAsyncRoute = filterAsyncRoute(
         //   cloneDeep(asnycRoute),
@@ -85,9 +85,9 @@ const useUserStore = defineStore('User', {
         //   router.addRoute(route)
         // })
         return 'ok'
-      // } else {
-      //   return Promise.reject(new Error(result.message))
-      // }
+      } else {
+        return Promise.reject(new Error(result.message))
+      }
     },
     //退出登录
      userLogout() {

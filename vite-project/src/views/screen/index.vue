@@ -7,9 +7,12 @@
                     <Tourist class="tourist">123</Tourist>
                     <Sex class="sex"></Sex>
                     <Age class="age"></Age>
-
                 </div>
-                <div class="center">222</div>
+                <div class="center">
+                    <Map class="map"></Map>
+                    <Line class="line"></Line>
+                </div>
+
                 <div class="right">111</div>
             </div>
         </div>
@@ -25,6 +28,8 @@ import ScreenTop from './components/ScreenTop.vue'
 import Tourist from './components/Tourist.vue'
 import Sex from './components/Sex.vue'
 import Age from './components/Age.vue'
+import Map from './components/Map.vue'
+import Line from './components/Line.vue'
 
 let screenRef = ref();
 
@@ -56,6 +61,7 @@ function changeScreenScale () {
     height: 100vh;
     background: url('@/assets/images/screen/bg.png') no-repeat;
     background-size: cover;
+    // background-color: skyblue;
 
     .screen {
         position: fixed;
@@ -95,6 +101,15 @@ function changeScreenScale () {
 
             .center {
                 flex: 2;
+                display: flex;
+                flex-direction: column;
+            
+                .map {
+                    flex: 2.2;
+                }
+                .line{
+                    flex: 1;
+                }
             }
 
             .right {
