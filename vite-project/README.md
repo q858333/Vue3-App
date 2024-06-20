@@ -10,7 +10,8 @@ This template should help get you started developing with Vue 3 and TypeScript i
 
 
 ## 插件
-扩展：上述代码，还需要编写一个不写setup的script标签，去指定组件名字，比较麻烦，我们可以借助vite中的插件简化
+
+1.扩展：上述代码，还需要编写一个不写setup的script标签，去指定组件名字，比较麻烦，我们可以借助vite中的插件简化
 
 
 npm i vite-plugin-vue-setup-extend -D
@@ -20,3 +21,5 @@ import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 export default defineConfig({
   plugins: [ VueSetupExtend() ]
 })
+
+2.[echarts]https://echarts.apache.org/examples/zh/index.html#chart-type-pie
