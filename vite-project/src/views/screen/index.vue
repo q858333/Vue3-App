@@ -105,7 +105,7 @@ function changeScreenScale () {
                 flex-direction: column;
             
                 .map {
-                    flex: 2.2;
+                    flex: 2;
                 }
                 .line{
                     flex: 1;

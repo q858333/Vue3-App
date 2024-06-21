@@ -100,7 +100,7 @@ onMounted(() => {
                 effect:{
                     show:true,
                     symbol:'arrow',
-                    symbolSize:10,
+                    symbolSize:15,
                     roundTrip:true,
                 }
             },
