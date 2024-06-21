@@ -72,7 +72,7 @@ onMounted(()=>{
         grid: {
             left: 50,
             top: 50,
-            right: 20,
+            right: 50,
             bottom: 50
         },
     })
@@ -83,11 +83,9 @@ onMounted(()=>{
 
 <style scoped lang="scss">
 .linebg {
-    width: 100%;
-    height: 100%;
     background: url('@/assets/images/screen/dataScreen-main-cb.png') no-repeat;
     background-size: 100% 100%;
-    margin: 0px 20px;
+    margin:0px 20px;
     .titlebox {
         .title {
             color: white;

@@ -1,5 +1,5 @@
 <template>
-    <div ref="mapRef">
+    <div class="mapbg" ref="mapRef">
 
     </div>
 </template>
@@ -19,9 +19,9 @@ onMounted(() => {
     chart.setOption({
         geo: [{
             map: 'china',
-            left: 50,
-            top: 70,
-            right: 50,
+            left: 80,
+            top: 90,
+            right: 120,
             bottom: 0,
             label: {
                 show: true,
@@ -113,4 +113,10 @@ onMounted(() => {
 })
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.mapbg{
+    width:100%;
+    height:100%;
+    // background-color: red;
+}
+</style>

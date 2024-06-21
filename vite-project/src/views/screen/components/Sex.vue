@@ -39,7 +39,7 @@ onMounted(() => {
         xAxis: {
            show:false,
            min: 0,
-        max: 100,
+           max: 100,
         },
         yAxis: {
             show:false,

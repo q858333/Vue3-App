@@ -13,7 +13,11 @@
                     <Line class="line"></Line>
                 </div>
 
-                <div class="right">111</div>
+                <div class="right">
+                    <Rank class="rank"></Rank>
+                    <Year class="year"></Year>
+                    <Counter class="counter"></Counter>
+                </div>
             </div>
         </div>
 
@@ -30,6 +34,9 @@ import Sex from './components/Sex.vue'
 import Age from './components/Age.vue'
 import Map from './components/Map.vue'
 import Line from './components/Line.vue'
+import Year from './components/Year.vue'
+import Counter from './components/Counter.vue'
+import Rank from './components/Rank.vue'
 
 let screenRef = ref();
 
@@ -105,7 +112,7 @@ function changeScreenScale () {
                 flex-direction: column;
             
                 .map {
-                    flex: 2;
+                    flex: 3;
                 }
                 .line{
                     flex: 1;
@@ -114,6 +121,19 @@ function changeScreenScale () {
 
             .right {
                 flex: 1;
+                display: flex;
+                flex-direction: column;
+                margin-top: 10px;
+                .rank {
+                    flex: 1.5;
+                }
+                .year {
+                    flex: 1;
+                }
+                .counter {
+                    flex: 1;
+                }
+
             }
         }
 
